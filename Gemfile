@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
-gem 'ruby', '2.0.0'
+'ruby' '2.0.0'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -39,7 +39,7 @@ end
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
