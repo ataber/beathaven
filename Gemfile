@@ -33,6 +33,7 @@ gem 'better_errors'
 gem 'haml-rails'
 gem 'memoist'
 gem 'pry-rails'
+gem 'devise'
 
 gem 'rails_12factor', group: :production
 
