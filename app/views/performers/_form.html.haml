@@ -1,0 +1,10 @@
+= form_for @performer do |f|
+  - if @performer.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"
+      %ul
+        - @performer.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

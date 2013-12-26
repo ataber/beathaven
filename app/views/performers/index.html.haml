@@ -1,0 +1,17 @@
+%h1 Listing performers
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @performers.each do |performer|
+    %tr
+      %td= link_to 'Show', performer
+      %td= link_to 'Edit', edit_performer_path(performer)
+      %td= link_to 'Destroy', performer, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Performer', new_performer_path
