@@ -1,13 +1,13 @@
 %h1 Performers
 
-%table.table
+%table.table.table-hover
   %tr
     %th Name
     %th Genre
-    %th View Details
+    %th Listen
 
   - @performers.each do |performer|
     %tr
       %td= performer.name
       %td= performer.genre
-      %td= link_to 'Show', performer
+      %td= link_to "Listen", performer
