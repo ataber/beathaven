@@ -1,5 +1,6 @@
 class PerformersController < ApplicationController
   before_action :set_performer, only: [:show, :edit, :update, :destroy]
+  before_filter :authorized_to_edit?, only: [:edit, :update, :destroy]
 
   def index
     @performers = Performer.all
@@ -52,6 +53,15 @@ class PerformersController < ApplicationController
   end
 
   private
+
+  def authorized_to_edit?
+    if current_user != @performer.user
+      flash[:error] = "You are not authorized to edit that listing"
+      redirect_to :back
+      return
+    end
+  end
+
   def set_performer
     @performer = Performer.find(params[:id])
   end

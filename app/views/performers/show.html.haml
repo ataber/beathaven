@@ -1,6 +1,4 @@
-%p#notice= notice
+%h1= @performer.name
+%button.btn.btn-large.btn-primary= "Book Now!"
 
-
-= link_to 'Edit', edit_performer_path(@performer)
-\|
-= link_to 'Back', performers_path
+= link_to 'Edit Listing', edit_performer_path(@performer) if current_user.performers.include? @performer

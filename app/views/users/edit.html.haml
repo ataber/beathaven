@@ -1,0 +1,20 @@
+%form.form
+  .form-group
+    %label{ :for => "email" } Email Address
+    %input.form-control{ :type => "email", :placeholder => current_user.email}
+  %button.btn.btn-large.btn-primary{ :type => "submit" } Update
+
+- unless current_user.performers.empty?
+  %h2 Your Band Listings
+  %table.table
+    %tr
+      %th Name
+      %th Genre
+      %th Soundcloud URL
+      %th Edit
+    - current_user.performers.each do |p|
+      %tr
+        %td= p.name
+        %td= p.genre || "None Entered"
+        %td= p.soundcloud_url || "None Entered"
+        %td= link_to "Edit Listing", edit_performer_path(p)

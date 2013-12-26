@@ -1,7 +1,14 @@
-%h1 Editing performer
+%h1 Editing performer listing
 
-= render 'form'
+= form_tag edit_performer_path(@performer), :class => "form" do
+  .form-group
+    = label_tag(:name, "Name", class: "label")
+    = text_field_tag(:name, @performer.name, class: "form-control", type: "text")
+  .form-group
+    = label_tag(:genre, "Genre", class: "label")
+    = select_tag 'genre', "<option>Rock</option><option>Jazz</option><option>Electronic</option>".html_safe, class: "form-control", type: "select"
+  = submit_tag("Update", class: "btn btn-large btn-primary")
 
-= link_to 'Show', @performer
+= link_to 'Show Preview', @performer
 \|
 = link_to 'Back', performers_path

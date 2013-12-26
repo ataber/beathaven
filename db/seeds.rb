@@ -1,5 +1,6 @@
 user = User.create(:email => "andrew.e.taber@gmail.com", :password => "nutpalace", :password_confirmation => "nutpalace")
 user2 = User.create(:email => "jesus.shuttlesworth@gmail.com", :password => "rayallenfor3", :password_confirmation => "rayallenfor3")
+user3 = User.create(:email => "king.james@gmail.com", :password => "fuckyoukobe", :password_confirmation => "fuckyoukobe")
 Performer.create(:name => "Pink Floyd", :genre => "Rock", :user_id => user.id)
 Performer.create(:name => "Green Day", :genre => "Rock", :user_id => user.id)
 Performer.create(:name => "Skrillex", :genre => "Electric", :user_id => user2.id)
