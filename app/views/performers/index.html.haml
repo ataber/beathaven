@@ -1,17 +1,13 @@
-%h1 Listing performers
+%h1 Performers
 
-%table
+%table.table
   %tr
-    %th
-    %th
-    %th
+    %th Name
+    %th Genre
+    %th View Details
 
   - @performers.each do |performer|
     %tr
+      %td= performer.name
+      %td= performer.genre
       %td= link_to 'Show', performer
-      %td= link_to 'Edit', edit_performer_path(performer)
-      %td= link_to 'Destroy', performer, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Performer', new_performer_path

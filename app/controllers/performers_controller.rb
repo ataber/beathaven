@@ -1,34 +1,27 @@
 class PerformersController < ApplicationController
   before_action :set_performer, only: [:show, :edit, :update, :destroy]
 
-  # GET /performers
-  # GET /performers.json
   def index
     @performers = Performer.all
+    @performers = @performers.genre(params[:genre]) if params[:genre].present?
   end
 
-  # GET /performers/1
-  # GET /performers/1.json
   def show
   end
 
-  # GET /performers/new
   def new
     @performer = Performer.new
   end
 
-  # GET /performers/1/edit
   def edit
   end
 
-  # POST /performers
-  # POST /performers.json
   def create
     @performer = Performer.new(performer_params)
 
     respond_to do |format|
       if @performer.save
-        format.html { redirect_to @performer, notice: 'Performer was successfully created.' }
+        format.html { redirect_to @performer, notice: 'Listing was successfully created.' }
         format.json { render action: 'show', status: :created, location: @performer }
       else
         format.html { render action: 'new' }
@@ -37,12 +30,10 @@ class PerformersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /performers/1
-  # PATCH/PUT /performers/1.json
   def update
     respond_to do |format|
       if @performer.update(performer_params)
-        format.html { redirect_to @performer, notice: 'Performer was successfully updated.' }
+        format.html { redirect_to @performer, notice: 'Listing was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -51,8 +42,6 @@ class PerformersController < ApplicationController
     end
   end
 
-  # DELETE /performers/1
-  # DELETE /performers/1.json
   def destroy
     @performer.destroy
     respond_to do |format|
@@ -62,13 +51,11 @@ class PerformersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_performer
-      @performer = Performer.find(params[:id])
-    end
+  def set_performer
+    @performer = Performer.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def performer_params
-      params[:performer]
-    end
+  def performer_params
+    params[:performer]
+  end
 end
