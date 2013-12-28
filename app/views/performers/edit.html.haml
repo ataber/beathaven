@@ -1,14 +1,22 @@
 %h1 Editing performer listing
 
-= form_tag edit_performer_path(@performer), :class => "form" do
+= form_tag edit_performer_path(@performer), :class => "form-horizontal", :role => "form" do
   .form-group
-    = label_tag(:name, "Name", class: "label")
-    = text_field_tag(:name, @performer.name, class: "form-control", type: "text")
+    = label_tag(:name, "Name", class: "col-sm-2 control-label")
+    .col-sm-4
+      = text_field_tag(:name, @performer.name, class: "form-control", type: "text")
   .form-group
-    = label_tag(:genre, "Genre", class: "label")
-    = select_tag 'genre', "<option>Rock</option><option>Jazz</option><option>Electronic</option>".html_safe, class: "form-control", type: "select"
-  = submit_tag("Update", class: "btn btn-large btn-primary")
+    = label_tag(:soundcloud_url, "Soundcloud URL", class: "col-sm-2 control-label")
+    .col-sm-4
+      = text_field_tag(:soundcloud_url, @performer.soundcloud_url, class: "form-control", type: "text")
+  .form-group
+    = label_tag(:genre, "Genre", class: "col-sm-2 control-label")
+    .col-sm-4
+      = select_tag 'genre', "<option>Rock</option><option>Jazz</option><option>Electronic</option>".html_safe, class: "form-control", type: "select"
+  .col-sm-offset-2
+    = submit_tag("Update", class: "btn btn-large btn-primary")
 
+<br />
 = link_to 'Show Preview', @performer
 \|
 = link_to 'Back', performers_path

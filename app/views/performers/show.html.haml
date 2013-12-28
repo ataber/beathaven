@@ -1,4 +1,4 @@
 %h1= @performer.name
 %button.btn.btn-large.btn-primary= "Book Now!"
 
-= link_to 'Edit Listing', edit_performer_path(@performer) if current_user && current_user.performers.include? @performer
+= link_to('Edit Listing', edit_performer_path(@performer)) if (current_user && current_user.performers.include?(@performer))
