@@ -9,6 +9,10 @@ class PerformersController < ApplicationController
   end
 
   def show
+    if url = @performer.soundcloud_url.presence
+      client      = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_ID'])
+      @embed_info = client.get('/oembed', :url => url)
+    end
   end
 
   def new

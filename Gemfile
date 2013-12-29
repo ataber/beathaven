@@ -38,7 +38,7 @@ end
 gem 'haml-rails'
 gem 'memoist'
 gem 'devise'
-
+gem 'soundcloud'
 gem 'rails_12factor', group: :production
 
 group :doc do

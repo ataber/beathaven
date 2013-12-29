@@ -2,7 +2,7 @@
   .form-group
     %label{ :for => "email" } Email Address
     %input.form-control{ :type => "email", :placeholder => current_user.email}
-  %button.btn.btn-large.btn-primary{ :type => "submit" } Update
+  %button.btn.btn-primary{ :type => "submit" } Update
 
 - unless current_user.performers.empty?
   %h2 Your Band Listings

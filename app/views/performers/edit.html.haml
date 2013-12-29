@@ -9,12 +9,13 @@
     = label_tag(:soundcloud_url, "Soundcloud URL", class: "col-sm-2 control-label")
     .col-sm-4
       = text_field_tag(:soundcloud_url, @performer.soundcloud_url, class: "form-control", type: "text")
+      %span.help-block Pick a song or set on Soundcloud that shows off what you can do, and we'll embed it automatically in your listing
   .form-group
     = label_tag(:genre, "Genre", class: "col-sm-2 control-label")
     .col-sm-4
       = select_tag 'genre', "<option>Rock</option><option>Jazz</option><option>Electronic</option>".html_safe, class: "form-control", type: "select"
   .col-sm-offset-2
-    = submit_tag("Update", class: "btn btn-large btn-primary")
+    = submit_tag("Update", class: "btn btn-lg btn-primary")
 
 <br />
 = link_to 'Show Preview', @performer
