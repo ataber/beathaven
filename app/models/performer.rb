@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: performers
+#
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  user_id        :integer
+#  genre          :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  soundcloud_url :string(255)
+#  description    :text
+#
+
 class Performer < ActiveRecord::Base
   validates_presence_of :name
   belongs_to :user
