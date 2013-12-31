@@ -1,6 +1,7 @@
-%h1 Editing performer listing
-
-= form_tag edit_performer_path(@performer), :class => "form-horizontal", :role => "form" do
+.page-header
+  %h1 Editing Performer Listing
+%br
+= form_tag edit_performer_path(@performer), :method => :put, :class => "form-horizontal", :role => "form" do
   .form-group
     = label_tag(:name, "Name", class: "col-sm-2 control-label")
     .col-sm-4
@@ -9,13 +10,17 @@
     = label_tag(:soundcloud_url, "Soundcloud URL", class: "col-sm-2 control-label")
     .col-sm-4
       = text_field_tag(:soundcloud_url, @performer.soundcloud_url, class: "form-control", type: "text")
-      %span.help-block Pick a song or set on Soundcloud that shows off what you can do, and we'll embed it automatically in your listing
+      %span.help-block Pick a song or set on Soundcloud that shows off your music, and we'll embed it automatically in your listing
+  .form-group
+    = label_tag(:description, "Description", class: "col-sm-2 control-label")
+    .col-sm-4
+      = text_area_tag(:description, @performer.description, class: "form-control", type: "text")
   .form-group
     = label_tag(:genre, "Genre", class: "col-sm-2 control-label")
     .col-sm-4
-      = select_tag 'genre', "<option>Rock</option><option>Jazz</option><option>Electronic</option>".html_safe, class: "form-control", type: "select"
+      <select style="width: 100%;" type="select" id="genre-select"></select>
   .col-sm-offset-2
-    = submit_tag("Update", class: "btn btn-lg btn-primary")
+    = submit_tag("Update", class: "btn btn-primary")
 
 <br />
 = link_to 'Show Preview', @performer

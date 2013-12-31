@@ -1,3 +1,14 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+jQuery ->
+  $("#genre-select").selectize({
+    maxItems: 3,
+    valueField: 'genre',
+    labelField: 'genre',
+    options: [
+      { genre: 'Rock' },
+      { genre: 'Jazz' },
+      { genre: 'Electronic' },
+      { genre: 'Hip Hop' },
+      { genre: 'Experimental' }
+      ],
+    create: true
+    })
