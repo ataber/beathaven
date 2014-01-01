@@ -26,5 +26,6 @@
     = f.label(:price, "Price Per Gig ($)", class: "col-sm-2 control-label")
     .col-sm-4
       = f.number_field(:price, class: "form-control", type: "number")
+      %span.help-block Leave blank if the price is negotiable
   .col-sm-offset-2
     = f.submit 'Save', class: "btn btn-primary"

@@ -1,10 +1,9 @@
 .page-header
   %h1
     = @performer.name
-    %small= number_to_currency(@performer.price)
+    %small= number_to_currency(@performer.price) || "Price Negotiable"
     %button.btn.btn-lg.btn-primary.pull-right= "Book Now!"
 
 %p
   = @performer.description
 = @embed_info.html.html_safe if @embed_info.present?
-= link_to('Edit Listing', edit_performer_path(@performer)) if (current_user && current_user.performers.include?(@performer))
