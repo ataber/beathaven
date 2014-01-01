@@ -9,7 +9,7 @@
           <select class="form-control" name="genre">
             <option>Rock</option>
             <option>Electronic</option>
-            <option>Folk</option>
+            <option>Jazz</option>
           </select> music
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
@@ -20,8 +20,15 @@
   <div class="container">
     <p class="lead">How Does It Work?</p>
     <p>You search our listings for the perfect performer for any event - <strong>wedding, party, or seminar</strong> - and once you've found what you want, we take care of the billing and logistics.</p>
-    <br/>
     <p class="lead">Why Not Book Through Craigslist?</p>
     <p>You can be sure every listing on our site will show up on time and deliver what you paid for since our rating and review system heavily incentivizes performers that are <strong>professional and competitively priced.</strong></p>
+    <p class="lead">What If I Can't Find What I'm Looking For?</p>
+    <p>We charge on a per-transaction basis, so there's no charge to browse. If there's a band you <strong> really</strong> want to see on this site, we'd love to make it happen.
+    </p>
+    <div class="col-md-offset-4 col-md-3">
+      <%= link_to new_user_path do %>
+        <button class="btn btn-lg btn-primary">Sign Up Now!</button>
+      <%- end %>
+    </div>
   </div>
 </div>
