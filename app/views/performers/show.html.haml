@@ -1,9 +1,8 @@
 .page-header
-  .row
-    .col-md-6
-      %h1= @performer.name
-    .col-md-6{:style => "vertical-align: middle;"}
-      %button.btn.btn-lg.btn-primary.pull-right= "Book Now!"
+  %h1
+    = @performer.name
+    %small= number_to_currency(@performer.price)
+    %button.btn.btn-lg.btn-primary.pull-right= "Book Now!"
 
 %p
   = @performer.description

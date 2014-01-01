@@ -6,7 +6,6 @@
         - @performer.errors.full_messages.each do |msg|
           %li= msg
 
-
   .form-group
     = f.label(:name, "Name", class: "col-sm-2 control-label")
     .col-sm-4
@@ -21,8 +20,11 @@
     .col-sm-4
       = f.text_area(:description, class: "form-control", type: "text")
   .form-group
-    = f.label(:genre, "Genre", class: "col-sm-2 control-label")
+    = f.label(:genre, "Genre(s)", class: "col-sm-2 control-label")
+    .col-sm-4#genre-select
+  .form-group
+    = f.label(:price, "Price Per Gig ($)", class: "col-sm-2 control-label")
     .col-sm-4
-      <select style="width: 100%;" type="select" id="genre-select"></select>
+      = f.number_field(:price, class: "form-control", type: "number")
   .col-sm-offset-2
     = f.submit 'Save', class: "btn btn-primary"

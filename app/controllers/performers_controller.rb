@@ -71,6 +71,6 @@ class PerformersController < ApplicationController
   end
 
   def performer_params
-    params[:performer]
+    params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre)
   end
 end
