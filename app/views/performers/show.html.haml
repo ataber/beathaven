@@ -2,8 +2,8 @@
   %h1
     = @performer.name
     %small= number_to_currency(@performer.price) || "Price Negotiable"
-    %button.btn.btn-lg.btn-primary.pull-right= "Book Now!"
+    //%button.btn.btn-lg.btn-primary.pull-right= "Book Now!"
+    %span.pull-right= render partial: "checkout", :locals => { :performer => @performer }
 
-%p
-  = @performer.description
+%p.lead= @performer.description
 = @embed_info.html.html_safe if @embed_info.present?

@@ -1,0 +1,9 @@
+<form action="" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_G9YBSk7EWa8Ai8yF4KRGbXd0"
+    data-amount=<%= @performer.price*100 %>
+    data-name="BeatHaven"
+    data-description="Book <%= @performer.name %>">
+  </script>
+</form>
