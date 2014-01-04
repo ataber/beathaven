@@ -10,6 +10,7 @@
 #  updated_at     :datetime
 #  soundcloud_url :string(255)
 #  description    :text
+#  price          :decimal(8, 2)
 #
 
 class Performer < ActiveRecord::Base
