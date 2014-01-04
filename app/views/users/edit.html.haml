@@ -1,10 +1,6 @@
-%form.form
-  .form-group
-    %label{ :for => "email" } Email Address
-    %input.form-control{ :type => "email", :placeholder => current_user.email}
-  %button.btn.btn-primary{ :type => "submit" } Update
-
-- unless current_user.performers.empty?
+%h2 Account Details
+= render :partial => "form"
+- if current_user.performers.present?
   %h2 Your Band Listings
   %table.table
     %tr
