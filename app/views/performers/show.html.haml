@@ -1,9 +1,13 @@
 .page-header
   %h1
     = @performer.name
-    %small= number_to_currency(@performer.price) || "Price Negotiable"
-    //%button.btn.btn-lg.btn-primary.pull-right= "Book Now!"
-    %span.pull-right= render partial: "checkout", :locals => { :performer => @performer }
+    %small= number_to_currency(@performer.price)
 
 %p.lead= @performer.description
 = @embed_info.html.html_safe if @embed_info.present?
+
+= form_for [@performer, @booking], :remote => true, class: "form" do |f|
+  .form-group
+    = f.label( "Event Date and Time", :for => :event_date )
+    = f.datetime_field(:event_date, :type => "datetime", class: "form-control")
+%span.pull-right= render partial: "checkout", :locals => { :performer => @performer }

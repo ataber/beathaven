@@ -13,6 +13,7 @@ class PerformersController < ApplicationController
       client      = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_ID'])
       @embed_info = client.get('/oembed', :url => url)
     end
+    @booking = @performer.bookings.new
   end
 
   def new

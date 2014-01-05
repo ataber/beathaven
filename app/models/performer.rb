@@ -17,6 +17,6 @@ class Performer < ActiveRecord::Base
   validates_presence_of :name, :price
   belongs_to :user
   has_many :bookings
-  scope :genre, lambda { |genre| where("genre ILIKE ?", genre) }
+  scope :genre, lambda { |genre| where("genre ILIKE ?", "%" + genre + "%") }
   scope :name_like, lambda { |text| where("name ILIKE ? OR genre ILIKE ?", "%" + text + "%", "%" + text + "%") }
 end
