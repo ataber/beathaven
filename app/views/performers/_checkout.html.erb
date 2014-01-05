@@ -1,9 +1,15 @@
-<form action="" method="POST">
+<%= form_for [@performer, @booking], class: "form" do |f| %>
+  <div class="form-group">
+    <%= f.label("Event Date", :for => :event_date) %>
+    <%= f.datetime_field(:event_date, :type => "date", class: "form-control") %>
+    <%= f.label("Comments", :for => :comments) %>
+    <%= f.text_area(:comments, :type => "textarea", class: "form-control") %>
+  </div>
   <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
     data-key="pk_test_G9YBSk7EWa8Ai8yF4KRGbXd0"
     data-amount=<%= @performer.price*100 %>
     data-name="BeatHaven"
-    data-description="Book <%= @performer.name %>">
+    data-description="Book <%=@performer.name%>">
   </script>
-</form>
+<%- end %>
