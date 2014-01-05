@@ -8,4 +8,9 @@
   .col-sm-6
     .well
       %p.lead= @performer.description
+    %hr
+    %h3
+      = "Want To Book " + @performer.name + "?"
+    %p.help-block
+      We won't charge your credit card until the performer has accepted your offer.
     %span= render partial: "checkout", :locals => { :performer => @performer, :booking => @booking }

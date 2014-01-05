@@ -1,14 +1,25 @@
 <%= form_for [@performer, @booking], class: "form" do |f| %>
+  <%- if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "error") + "prohibited this performer from being saved:" %></h2>
+      <ul>
+        <%- @booking.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <%- end %>
+      </ul>
+    </div>
+  <%- end %>
+
   <div class="form-group">
     <%= f.label("Event Date", :for => :event_date) %>
     <%= f.datetime_field(:event_date, :type => "date", class: "form-control") %>
-    <%= f.label("Comments", :for => :comments) %>
+    <%= f.label("Comments Or Requests (optional)", :for => :comments) %>
     <%= f.text_area(:comments, :type => "textarea", class: "form-control") %>
   </div>
   <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
     data-key="pk_test_G9YBSk7EWa8Ai8yF4KRGbXd0"
-    data-amount=<%= @performer.price*100 %>
+    data-amount=<%= (@performer.price*100).to_i %>
     data-name="BeatHaven"
     data-description="Book <%=@performer.name%>">
   </script>
