@@ -8,6 +8,8 @@
 #  event_date   :datetime
 #  performer_id :integer
 #  cost         :decimal(8, 2)
+#  comments     :text
+#  accepted     :boolean
 #
 
 class Booking < ActiveRecord::Base
