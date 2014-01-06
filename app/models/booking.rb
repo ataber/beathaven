@@ -12,5 +12,13 @@
 
 class Booking < ActiveRecord::Base
   validates_presence_of :event_date, :cost
+  validate :validate_event_date, :on => :create
   belongs_to :performer
+
+  private
+  def validate_event_date
+    if event_date.present? && event_date < Date.today
+      errors.add(:event_date, "can't be in the past")
+    end
+  end
 end

@@ -4,7 +4,7 @@ class PerformersController < ApplicationController
 
   def index
     @performers = Performer.all
-    @performers = @performers.genre(params[:genre]) if params[:genre].present?
+    @performers = @performers.genre_like(params[:genre]) if params[:genre].present?
     @performers = @performers.name_like(params[:search_text]) if params[:search_text].present?
   end
 
