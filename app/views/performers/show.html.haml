@@ -6,7 +6,7 @@
   .col-sm-6
     = @embed_info.html.html_safe if @embed_info.present?
   .col-sm-6
-    - if @perfomer.description.present?
+    - if @performer.description.present?
       .well
         %p.lead= @performer.description
     %hr
