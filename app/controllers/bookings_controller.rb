@@ -16,11 +16,6 @@ class BookingsController < ApplicationController
     save_stripe_customer_id(current_user, customer.id)
 
     @booking = Booking.new(params.require(:booking).permit(:event_date, :cost))
-    if params[:comment].present?
-      comment = @booking.comments.build(:content => params[:comment])
-      comment.user = current_user
-      comment.save
-    end
     @booking.performer = @performer
 
     if @booking.save

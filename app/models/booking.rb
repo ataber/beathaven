@@ -5,10 +5,11 @@
 #  id           :integer          not null, primary key
 #  created_at   :datetime
 #  updated_at   :datetime
-#  event_date   :datetime
+#  event_date   :date
 #  performer_id :integer
 #  cost         :decimal(8, 2)
 #  accepted     :boolean
+#  event_time   :time
 #
 
 class Booking < ActiveRecord::Base

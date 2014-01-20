@@ -12,9 +12,9 @@
 
   <div class="form-group">
     <%= f.label("Event Date", :for => :event_date) %>
-    <%= f.datetime_field(:event_date, :type => "date", class: "form-control") %>
-    <%= f.label("Comments Or Requests (optional)", :for => :comments) %>
-    <%= f.text_area(:comment, :type => "textarea", class: "form-control") %>
+    <%= f.date_field(:event_date, :type => "date", class: "form-control") %>
+    <%= f.label("Event Time", :for => :event_time) %>
+    <%= f.time_field(:event_time, :type => "time", class: "form-control") %>
     <%= f.hidden_field(:cost, value: @performer.price) %>
   </div>
   <script
