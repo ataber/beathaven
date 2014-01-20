@@ -4,5 +4,6 @@ Beathaven::Application.routes.draw do
     resources :bookings
   end
   resources :users
+  resources :comments
   root 'pages#home'
 end

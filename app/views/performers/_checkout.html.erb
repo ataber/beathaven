@@ -14,7 +14,8 @@
     <%= f.label("Event Date", :for => :event_date) %>
     <%= f.datetime_field(:event_date, :type => "date", class: "form-control") %>
     <%= f.label("Comments Or Requests (optional)", :for => :comments) %>
-    <%= f.text_area(:comments, :type => "textarea", class: "form-control") %>
+    <%= f.text_area(:comment, :type => "textarea", class: "form-control") %>
+    <%= f.hidden_field(:cost, value: @performer.price) %>
   </div>
   <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"

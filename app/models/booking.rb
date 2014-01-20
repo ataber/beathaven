@@ -8,14 +8,15 @@
 #  event_date   :datetime
 #  performer_id :integer
 #  cost         :decimal(8, 2)
-#  comments     :text
 #  accepted     :boolean
 #
 
 class Booking < ActiveRecord::Base
   validates_presence_of :event_date, :cost
   validate :validate_event_date, :on => :create
+
   belongs_to :performer
+  has_many :comments
 
   private
   def validate_event_date

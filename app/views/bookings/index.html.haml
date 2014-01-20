@@ -1,0 +1,14 @@
+%h1= "Bookings for " + @performer.name.humanize
+
+%table.table
+  %tr
+    %th Event Date
+    %th Cost
+    %th Accepted
+    %th View Comments
+  - @bookings.each do |booking|
+    %tr
+      %td= booking.event_date.to_date
+      %td= number_to_currency(booking.cost)
+      %td= booking.accepted? ? "Yes" : "No"
+      %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })

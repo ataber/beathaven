@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140106062233) do
+ActiveRecord::Schema.define(version: 20140120065958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,15 @@ ActiveRecord::Schema.define(version: 20140106062233) do
     t.datetime "event_date"
     t.integer  "performer_id"
     t.decimal  "cost",         precision: 8, scale: 2
-    t.text     "comments"
     t.boolean  "accepted"
+  end
+
+  create_table "comments", force: true do |t|
+    t.integer  "booking_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "performers", force: true do |t|
@@ -50,6 +57,7 @@ ActiveRecord::Schema.define(version: 20140106062233) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "stripe_customer_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

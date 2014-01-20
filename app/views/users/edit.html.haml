@@ -7,10 +7,12 @@
       %th Name
       %th Genre
       %th Soundcloud URL
+      %th View Bookings
       %th Edit
     - current_user.performers.each do |p|
       %tr
         %td= p.name
         %td= p.genre || "None Entered"
         %td= p.soundcloud_url || "None Entered"
+        %td= link_to "Bookings", performer_bookings_path(p)
         %td= link_to "Edit Listing", edit_performer_path(p)
