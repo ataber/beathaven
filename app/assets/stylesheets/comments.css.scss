@@ -1,0 +1,25 @@
+$green: #35D455;
+$grey: #A8B5AB;
+
+.comments {
+  .comments-wrapper {
+    p {
+      border-radius: 3px;
+      margin: 5px 5px 5px 5px;
+      padding: 5px 5px 5px 5px;
+      font-size: 1.5em;
+
+      &.same-user {
+        float: right;
+        text-align: right;
+        background-color: $green;
+      }
+
+      &.other-user {
+        float: left;
+        text-align: left;
+        background-color: $grey;
+      }
+    }
+  }
+}

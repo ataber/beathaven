@@ -1,0 +1,5 @@
+.row
+  - if current_user.id == comment.user_id
+    %p.col-md-3.col-md-offset-6.same-user= comment.content
+  - else
+    %p.col-md-3.col-md-offset-2.other-user= comment.content
