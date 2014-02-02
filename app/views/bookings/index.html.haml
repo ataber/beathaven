@@ -1,14 +1,31 @@
 %h1= "Bookings for " + @performer.name.humanize
 
-%table.table
-  %tr
-    %th Event Date
-    %th Cost
-    %th Accepted
-    %th View Comments
-  - @bookings.each do |booking|
+- if @accepted.present?
+  %h4 Accepted Bookings
+  %table.table
     %tr
-      %td= booking.event_date.to_date
-      %td= number_to_currency(booking.cost)
-      %td= booking.accepted? ? "Yes" : "No"
-      %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+      %th Event Date
+      %th Cost
+      %th View Comments
+    - @accepted.each do |booking|
+      %tr
+        %td= booking.event_date.to_date
+        %td= number_to_currency(booking.cost)
+        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+
+- if @pending.present?
+  %h4 Pending Bookings
+  %table.table
+    %tr
+      %th Event Date
+      %th Cost
+      %th View Comments
+      %th Accept
+    - @pending.each do |booking|
+      %tr
+        %td= booking.event_date.to_date
+        %td= number_to_currency(booking.cost)
+        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+        %td
+          = link_to accept_performer_booking_path(@performer, booking) do
+            %span.glyphicon.glyphicon-flash

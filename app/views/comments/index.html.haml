@@ -1,1 +1,15 @@
-%h1= "Comments for booking on " + @booking.event_date.to_date.to_s + " for " + @booking.performer.name.humanize
+.comments
+  %h1= "Comments for booking on " + @booking.event_date.to_date.to_s + " for " + @booking.performer.name.humanize
+  %hr
+
+  .comments-wrapper
+    = render partial: "comment", collection: @comments
+  %br
+
+  = form_for Comment.new, url: { action: "create" }, remote: true, class: "form", html: {id: "comment-form"} do |f|
+    .form-group.col-md-offset-6
+      = f.text_area :content, type: "text_area", class: "form-control", placeholder: "Add New Comment..."
+      = f.hidden_field :booking_id, value: @booking.id
+      = f.hidden_field :user_id, value: current_user.id
+    .form-group
+      = f.submit "Add Comment", class: "btn btn-default", style: "float: right;"

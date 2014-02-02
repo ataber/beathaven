@@ -16,6 +16,7 @@
     <%= f.label("Event Time", :for => :event_time) %>
     <%= f.time_field(:event_time, :type => "time", class: "form-control") %>
     <%= f.hidden_field(:cost, value: @performer.price) %>
+    <%= f.hidden_field(:user_id, value: current_user.id) %>
   </div>
   <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"

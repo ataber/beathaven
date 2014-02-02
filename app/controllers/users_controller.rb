@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+    @user = User.find(params.require(:id))
+    @bookings = @user.bookings
+    @performers = @user.performers
   end
 end

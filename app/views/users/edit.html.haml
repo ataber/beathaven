@@ -1,18 +1,32 @@
 %h2 Account Details
 = render :partial => "form"
-- if current_user.performers.present?
+
+- if @bookings.exists?
+  %h2 Your Upcoming Bookings
+  %table.table
+    %tr
+      %th Performer
+      %th Date
+      %th Time
+      %th Comments
+      %th Accepted?
+    - @bookings.each do |booking|
+      %tr
+        %td= booking.performer.name
+        %td= booking.event_date
+        %td= booking.event_time || "N/A"
+        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+        %td= booking.accepted? ? "Yes" : "No"
+
+- if @performers.exists?
   %h2 Your Band Listings
   %table.table
     %tr
       %th Name
-      %th Genre
-      %th Soundcloud URL
       %th View Bookings
       %th Edit
-    - current_user.performers.each do |p|
+    - @performers.each do |p|
       %tr
         %td= p.name
-        %td= p.genre || "None Entered"
-        %td= p.soundcloud_url || "None Entered"
         %td= link_to "Bookings", performer_bookings_path(p)
         %td= link_to "Edit Listing", edit_performer_path(p)

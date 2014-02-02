@@ -3,7 +3,8 @@ class BookingsController < ApplicationController
   before_filter :find_performer
 
   def index
-    @bookings = @performer.bookings.sort(&:created_at)
+    @bookings = @performer.bookings.sort_by(&:created_at)
+    @accepted, @pending = @bookings.partition(&:accepted?)
   end
 
   def create
@@ -17,17 +18,20 @@ class BookingsController < ApplicationController
 
     @booking = Booking.new(params.require(:booking).permit(:event_date, :cost))
     @booking.performer = @performer
+    @booking.user = find_user
 
     if @booking.save
       flash[:notice] = "Your booking has been created, check your profile to see if the performer has accepted."
     else
-      flash[:error] = "We were unable to save your booking, please try again later"
+      flash[:error] = @booking.errors.messages
     end
     redirect_to performer_path(@performer)
   end
 
   def accept
-    if customer_id = get_stripe_customer_id(current_user)
+    booking = Booking.find(params.require(:id))
+    user = booking.user
+    if customer_id = get_stripe_customer_id(user)
       Stripe::Charge.create(
         :amount => cost,
         :currency => "usd",
@@ -41,6 +45,10 @@ class BookingsController < ApplicationController
   private
   def find_performer
     @performer ||= Performer.find(params.require(:performer_id))
+  end
+
+  def find_user
+    @user ||= User.find(params.require(:booking).permit(:user_id)[:user_id])
   end
 
   def save_stripe_customer_id(user, id)

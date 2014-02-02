@@ -13,9 +13,10 @@
 #
 
 class Booking < ActiveRecord::Base
-  validates_presence_of :event_date, :cost
+  validates_presence_of :event_date, :cost, :performer_id, :user_id
   validate :validate_event_date, :on => :create
 
+  belongs_to :user
   belongs_to :performer
   has_many :comments
 
