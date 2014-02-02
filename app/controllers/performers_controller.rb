@@ -3,9 +3,10 @@ class PerformersController < ApplicationController
   before_filter :authorized_to_edit?, only: [:edit, :update, :destroy]
 
   def index
-    @performers = Performer.all
-    @performers = @performers.genre_like(params[:genre]) if params[:genre].present?
-    @performers = @performers.name_like(params[:search_text]) if params[:search_text].present?
+    scope = Performer.all
+    scope = scope.genre_like(params[:genre]) if params[:genre].present?
+    scope = scope.name_like(params[:search_text]) if params[:search_text].present?
+    @performers = scope.paginate(:page => params[:page], :per_page => 20)
   end
 
   def show

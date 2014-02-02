@@ -36,6 +36,7 @@ gem 'haml-rails'
 gem 'devise'
 gem 'soundcloud'
 gem 'annotate'
+gem 'will_paginate'
 gem 'rails_12factor', group: :production
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
