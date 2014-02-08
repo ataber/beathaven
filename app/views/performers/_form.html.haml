@@ -22,7 +22,7 @@
   .form-group
     = f.label(:genre, "Genre(s)", class: "col-sm-2 control-label")
     .col-sm-4#genre-select
-      = f.select(:genre, options_for_genre, class: "form-control", type: "select")
+      = select_tag(:genre, options_for_genre(@performer.genre), class: "form-control", type: "select")
   .form-group
     = f.label(:price, "Price Per Gig ($)", class: "col-sm-2 control-label")
     .col-sm-4

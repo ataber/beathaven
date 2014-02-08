@@ -1,6 +1,6 @@
 module PerformersHelper
-  def options_for_genre
-    genres = ["Rock", "Jazz", "Electronic", "Hip Hop"]
-    options_for_select(genres)
+  def options_for_genre(genre=nil)
+    genres = ["Rock", "Jazz", "Electronic", "Hip Hop", "Experimental"]
+    options_for_select(genres, genre)
   end
 end
