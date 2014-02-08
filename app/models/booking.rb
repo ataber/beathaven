@@ -22,9 +22,13 @@ class Booking < ActiveRecord::Base
   belongs_to :performer
   has_many :comments
 
+  def past?
+    event_date < Date.today
+  end
+
   private
   def validate_event_date
-    if event_date.present? && event_date < Date.today
+    if past?
       errors.add(:event_date, "can't be in the past")
     end
   end

@@ -4,6 +4,7 @@ class BookingsController < ApplicationController
   def index
     @bookings = @performer.bookings.sort_by(&:created_at)
     @accepted, @pending = @bookings.partition(&:accepted?)
+    @completed = @accepted.select(&:past?)
   end
 
   def create

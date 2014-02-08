@@ -1,4 +1,4 @@
-%h1= "Bookings for " + @performer.name.humanize
+%h1= "Bookings for " + @performer.name
 
 - if @accepted.present?
   %h4 Accepted Bookings
@@ -37,3 +37,16 @@
         %td
           = link_to decline_performer_booking_path(@performer, booking), class: "decline-link", remote: true do
             %span.glyphicon.glyphicon-remove
+
+- if @completed.present?
+  %h4 Completed Bookings
+  %table.table#completed-bookings
+    %tr
+      %th Event Date
+      %th Event Time
+      %th Cost
+    - @completed.each do |booking|
+      %tr
+        %td= booking.event_date.to_date
+        %td= booking.event_time || "N/A"
+        %td= number_to_currency(booking.cost)
