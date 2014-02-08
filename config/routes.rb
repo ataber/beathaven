@@ -4,6 +4,7 @@ Beathaven::Application.routes.draw do
     resources :bookings do
       member do
         get :accept
+        get :decline
       end
     end
   end

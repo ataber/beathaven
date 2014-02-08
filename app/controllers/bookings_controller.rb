@@ -1,5 +1,4 @@
 class BookingsController < ApplicationController
-  before_filter :stripe_credentials, :except => :index
   before_filter :find_performer
 
   def index
@@ -9,12 +8,7 @@ class BookingsController < ApplicationController
 
   def create
     # save the stripe details for later, when the performer accepts the booking
-    token = params.require(:stripeToken)
-    customer = Stripe::Customer.create(
-      :card => token,
-      :description => params.require(:stripeEmail)
-      )
-    save_stripe_customer_id(current_user, customer.id)
+    get_stripe_customer
 
     @booking = Booking.new(params.require(:booking).permit(:event_date, :cost))
     @booking.performer = @performer
@@ -31,40 +25,47 @@ class BookingsController < ApplicationController
   def accept
     booking = Booking.find(params.require(:id))
     user = booking.user
-    if customer_id = get_stripe_customer_id(user)
-      Stripe::Charge.create(
-        :amount => cost,
-        :currency => "usd",
-        :customer => customer_id
-        )
+
+    if (customer_id = user.stripe_customer_id)
+      Booking.transaction do
+        Stripe::Charge.create(
+          :amount   => (booking.cost*100).to_i,
+          :currency => "usd",
+          :customer => customer_id
+          )
+        booking.accepted = true
+        booking.save!
+      end
     else
       flash[:error] = "The user that requested this booking doesn't have any payment info associated"
     end
+    redirect_to performer_bookings_path(@performer)
+  end
+
+  def decline
+    booking = Booking.find(params.require(:id))
+    booking.update_attribute(:active, false)
+    render nothing: true, status: 200
   end
 
   private
+  def get_stripe_customer
+    if (stripe_id = current_user.stripe_customer_id)
+      Stripe::Customer.retrieve(id: stripe_id)
+    else
+      customer = Stripe::Customer.create(
+        card:        params.require(:stripeToken),
+        description: params.require(:stripeEmail)
+        )
+      current_user.update_attribute(:stripe_customer_id, customer.id)
+    end
+  end
+
   def find_performer
     @performer ||= Performer.find(params.require(:performer_id))
   end
 
   def find_user
     @user ||= User.find(params.require(:booking).permit(:user_id)[:user_id])
-  end
-
-  def save_stripe_customer_id(user, id)
-    user.stripe_customer_id = id
-    user.save!
-  end
-
-  def get_stripe_customer_id(user)
-    if user.stripe_customer_id.present?
-      return user.stripe_customer_id
-    else
-      throw "No Payment Data For This User"
-    end
-  end
-
-  def stripe_credentials
-    Stripe.api_key = ENV["STRIPE_API_KEY"]
   end
 end

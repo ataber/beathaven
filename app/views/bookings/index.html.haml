@@ -2,30 +2,38 @@
 
 - if @accepted.present?
   %h4 Accepted Bookings
-  %table.table
+  %table.table#accepted-bookings
     %tr
       %th Event Date
+      %th Event Time
       %th Cost
       %th View Comments
     - @accepted.each do |booking|
       %tr
         %td= booking.event_date.to_date
+        %td= booking.event_time || "N/A"
         %td= number_to_currency(booking.cost)
         %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
 
 - if @pending.present?
   %h4 Pending Bookings
-  %table.table
+  %table.table#pending-bookings
     %tr
       %th Event Date
+      %th Event Time
       %th Cost
       %th View Comments
       %th Accept
+      %th Decline
     - @pending.each do |booking|
       %tr
         %td= booking.event_date.to_date
+        %td= booking.event_time || "N/A"
         %td= number_to_currency(booking.cost)
         %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
         %td
-          = link_to accept_performer_booking_path(@performer, booking) do
-            %span.glyphicon.glyphicon-flash
+          = link_to accept_performer_booking_path(@performer, booking), class: "accept-link" do
+            %span.glyphicon.glyphicon-ok
+        %td
+          = link_to decline_performer_booking_path(@performer, booking), class: "decline-link", remote: true do
+            %span.glyphicon.glyphicon-remove

@@ -10,6 +10,8 @@
 #  cost         :decimal(8, 2)
 #  accepted     :boolean
 #  event_time   :time
+#  user_id      :integer
+#  active       :boolean          default(TRUE)
 #
 
 class Booking < ActiveRecord::Base

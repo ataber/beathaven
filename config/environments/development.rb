@@ -16,6 +16,9 @@ Beathaven::Application.configure do
   config.action_controller.perform_caching = false
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
+  # Set Stripe API key (must be test key)
+  Stripe.api_key = ENV["STRIPE_API_KEY"]
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 

@@ -15,7 +15,7 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
-#  stripe_customer_id     :integer
+#  stripe_customer_id     :string(255)
 #
 # Indexes
 #
@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :performers
-  has_many :bookings
+  has_many :bookings, conditions: { active: true }
+  has_many :unscoped_bookings, class_name: "Booking"
   has_many :comments
 end
