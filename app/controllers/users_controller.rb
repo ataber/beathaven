@@ -4,8 +4,8 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params.require(:id))
-    @bookings = @user.bookings
+    @user = User.preload(:performers, bookings: :performer).find(params.require(:id))
+    @past_bookings, @upcoming_bookings = @user.bookings.partition(&:past?)
     @performers = @user.performers
   end
 end

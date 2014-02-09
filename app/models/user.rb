@@ -27,10 +27,13 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   validates :email, :presence => true, :uniqueness => true
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
   has_many :performers
-  has_many :bookings, conditions: { active: true }
+  has_many :bookings, -> { where active: true }
   has_many :unscoped_bookings, class_name: "Booking"
   has_many :comments
+  has_many :reviews
 end

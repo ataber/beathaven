@@ -7,16 +7,16 @@
           %li= msg
 
   .form-group
-    = f.label(:email, "Email", class: "col-sm-2 control-label")
+    = f.label(:email, "email", class: "col-sm-2 col-sm-offset-2 control-label")
     .col-sm-4
       = f.text_field(:email, class: "form-control", type: "text")
   .form-group
-    = f.label(:password, "Password", class: "col-sm-2 control-label")
+    = f.label(:password, "password", class: "col-sm-2 col-sm-offset-2 control-label")
     .col-sm-4
       = f.password_field(:password)
   .form-group
-    = f.label(:password_confirmation, "Password Confirmation", class: "col-sm-2 control-label")
+    = f.label(:password_confirmation, "password confirmation", class: "col-sm-2 col-sm-offset-2 control-label")
     .col-sm-4
       = f.password_field(:password_confirmation)
-  .col-sm-offset-2
-    = f.submit 'Save', class: "btn btn-primary"
+  .col-sm-offset-5
+    = f.submit 'save', class: "btn btn-primary"

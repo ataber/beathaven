@@ -1,32 +1,61 @@
-%h2 Account Details
-= render :partial => "form"
+%ul.nav.nav-pills.nav-justified#user-edit-tab
+  %li.active
+    = link_to "#account", data: {toggle: "tab"} do
+      Account Details
+  %li
+    = link_to "#upcoming", data: {toggle: "tab"} do
+      Upcoming Events
+  %li
+    = link_to "#past", data: {toggle: "tab"} do
+      Past Events
+  %li
+    = link_to "#listings", data: {toggle: "tab"} do
+      Band Listings
 
-- if @bookings.exists?
-  %h2 Your Upcoming Bookings
-  %table.table
-    %tr
-      %th Performer
-      %th Date
-      %th Time
-      %th Comments
-      %th Accepted?
-    - @bookings.each do |booking|
-      %tr
-        %td= booking.performer.name
-        %td= booking.event_date
-        %td= booking.event_time || "N/A"
-        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
-        %td= booking.accepted? ? "Yes" : "No"
+%br
+.tab-content
+  .tab-pane.fade.in.active#account= render :partial => "form"
+  .tab-pane.fade#upcoming
+    - if @upcoming_bookings.present?
+      %table.table
+        %tr
+          %th Performer
+          %th Date
+          %th Time
+          %th Comments
+          %th Accepted?
+        - @upcoming_bookings.each do |booking|
+          %tr
+            %td= booking.performer.name
+            %td= booking.event_date
+            %td= booking.event_time || "N/A"
+            %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+            %td= booking.accepted? ? "Yes" : "No"
 
-- if @performers.exists?
-  %h2 Your Band Listings
-  %table.table
-    %tr
-      %th Name
-      %th View Bookings
-      %th Edit
-    - @performers.each do |p|
-      %tr
-        %td= p.name
-        %td= link_to "Bookings", performer_bookings_path(p)
-        %td= link_to "Edit Listing", edit_performer_path(p)
+  .tab-pane.fade#past
+    - if @past_bookings.present?
+      %table.table
+        %tr
+          %th Performer
+          %th Date
+          %th Time
+          %th Add Review
+        - @past_bookings.each do |booking|
+          %tr
+            %td= booking.performer.name
+            %td= booking.event_date
+            %td= booking.event_time || "N/A"
+            %td= link_to "Review", "#", class: "btn btn-primary", data: {toggle: "modal", target: "#performer-#{booking.performer.id}"}
+            = render partial: "review_modal", locals: {performer: booking.performer, user_id: current_user.id}
+  .tab-pane.fade#listings
+    - if @performers.exists?
+      %table.table
+        %tr
+          %th Name
+          %th View Bookings
+          %th Edit
+        - @performers.each do |p|
+          %tr
+            %td= p.name
+            %td= link_to "Bookings", performer_bookings_path(p)
+            %td= link_to "Edit Listing", edit_performer_path(p)
