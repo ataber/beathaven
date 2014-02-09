@@ -1,0 +1,14 @@
+- if @performers.exists?
+  %table.table
+    %tr
+      %th Name
+      %th View Bookings
+      %th Edit
+    - @performers.each do |p|
+      %tr
+        %td= p.name
+        %td= link_to "Bookings", performer_bookings_path(p)
+        %td= link_to "Edit Listing", edit_performer_path(p)
+- else
+  %br
+  %p.text-center.text-muted Nothing Here Yet

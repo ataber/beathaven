@@ -10,52 +10,11 @@
       Past Events
   %li
     = link_to "#listings", data: {toggle: "tab"} do
-      Band Listings
+      Your Performer Listings
 
 %br
 .tab-content
-  .tab-pane.fade.in.active#account= render :partial => "form"
-  .tab-pane.fade#upcoming
-    - if @upcoming_bookings.present?
-      %table.table
-        %tr
-          %th Performer
-          %th Date
-          %th Time
-          %th Comments
-          %th Accepted?
-        - @upcoming_bookings.each do |booking|
-          %tr
-            %td= booking.performer.name
-            %td= booking.event_date
-            %td= booking.event_time || "N/A"
-            %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
-            %td= booking.accepted? ? "Yes" : "No"
-
-  .tab-pane.fade#past
-    - if @past_bookings.present?
-      %table.table
-        %tr
-          %th Performer
-          %th Date
-          %th Time
-          %th Add Review
-        - @past_bookings.each do |booking|
-          %tr
-            %td= booking.performer.name
-            %td= booking.event_date
-            %td= booking.event_time || "N/A"
-            %td= link_to "Review", "#", class: "btn btn-primary", data: {toggle: "modal", target: "#performer-#{booking.performer.id}"}
-            = render partial: "review_modal", locals: {performer: booking.performer, user_id: current_user.id}
-  .tab-pane.fade#listings
-    - if @performers.exists?
-      %table.table
-        %tr
-          %th Name
-          %th View Bookings
-          %th Edit
-        - @performers.each do |p|
-          %tr
-            %td= p.name
-            %td= link_to "Bookings", performer_bookings_path(p)
-            %td= link_to "Edit Listing", edit_performer_path(p)
+  .tab-pane.fade.in.active#account= render partial: "form"
+  .tab-pane.fade#upcoming= render partial: "upcoming_events"
+  .tab-pane.fade#past= render partial: "past_events"
+  .tab-pane.fade#listings= render partial: "performer_listings"

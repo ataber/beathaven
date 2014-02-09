@@ -1,0 +1,18 @@
+- if @upcoming_bookings.present?
+  %table.table
+    %tr
+      %th Performer
+      %th Date
+      %th Time
+      %th Comments
+      %th Accepted?
+    - @upcoming_bookings.each do |booking|
+      %tr
+        %td= booking.performer.name
+        %td= booking.event_date
+        %td= booking.event_time || "N/A"
+        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+        %td= booking.accepted? ? "Yes" : "No"
+- else
+  %br
+  %p.text-center.text-muted Nothing Here Yet
