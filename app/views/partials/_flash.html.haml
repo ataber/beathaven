@@ -1,0 +1,6 @@
+- flash.each do |key, msg|
+  - alert_level = (key == :notice ? "info" : "danger")
+  .alert.flash{class: "alert-#{alert_level}"}
+    = link_to "&times;".html_safe, "#", class: "close pull-right", :"aria-hidden" => true, :data => { dismiss: "alert" }
+    %p= msg
+  .clearfix
