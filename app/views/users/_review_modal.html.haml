@@ -1,0 +1,15 @@
+.modal.fade.review-modal{id: "performer-#{performer.id}"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{:"aria-hidden" => true, data: {dismiss: true}} &times;
+        %h4.modal-title
+          Add Review For
+          = performer.name
+      = form_for :review, url: reviews_path, class: "form review-form", html: {id: "comment-form"} do |f|
+        .modal-body
+          = f.text_area :content, class: "form-control", type: "text"
+          = hidden_field_tag :user_id, user_id
+          = hidden_field_tag :performer_id, performer.id
+        .modal-footer
+          = f.submit class: "btn btn-primary"

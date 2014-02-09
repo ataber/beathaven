@@ -23,3 +23,11 @@
             %button.btn.btn-primary Log In
     - else
       %span= render partial: "checkout", :locals => { :performer => @performer, :booking => @booking }
+
+%hr
+.col-sm-6
+  %h3.center Reviews
+  - @performer.reviews.each do |review|
+    .well.well-lg
+      %p.strong= review.content
+      %footer= review.created_at.to_date

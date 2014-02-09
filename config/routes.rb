@@ -11,5 +11,7 @@ Beathaven::Application.routes.draw do
   end
   resources :users
   resources :comments
+  resources :reviews
+
   root 'pages#home'
 end
