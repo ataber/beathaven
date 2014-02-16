@@ -18,8 +18,8 @@ class Booking < ActiveRecord::Base
   validates_presence_of :event_date, :cost, :performer_id, :user_id
   validate :validate_event_date, :on => :create
 
-  belongs_to :user
-  belongs_to :performer
+  belongs_to :user, inverse_of: :bookings
+  belongs_to :performer, inverse_of: :bookings
   has_many :comments, inverse_of: :booking
 
   def past?

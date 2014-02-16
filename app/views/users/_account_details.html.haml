@@ -1,0 +1,16 @@
+%br
+= render partial: "form"
+
+%h3 Payment History
+%table.table.table-bordered
+  %tr
+    %th Amount
+    %th Last 4 of Card
+  - if (history = current_user.payment_history)
+    - history.each do |payment|
+      %tr
+        %td= number_to_currency(payment.amount/100)
+        %td= payment.card.last4
+  - else
+    %tr
+      %td.text-center.text-muted{colspan: "2"} Nothing Yet

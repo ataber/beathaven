@@ -1,4 +1,4 @@
-%table.table
+%table.table.table-bordered
   %tr
     %th Performer
     %th Date
@@ -7,7 +7,7 @@
     %th Accepted?
   - if @upcoming_bookings.present?
     - @upcoming_bookings.each do |booking|
-      %tr
+      %tr{class: booking.accepted? ? "success" : "danger"}
         %td= booking.performer.name
         %td= booking.event_date
         %td= booking.event_time || "N/A"

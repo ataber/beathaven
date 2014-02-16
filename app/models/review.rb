@@ -12,6 +12,6 @@
 
 class Review < ActiveRecord::Base
   belongs_to :user, inverse_of: :review
-  belongs_to :performer, inverse_of: :review
+  belongs_to :performer, inverse_of: :reviews
   validates_presence_of :content, :performer_id, :user_id
 end

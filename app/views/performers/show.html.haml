@@ -26,8 +26,8 @@
 
 - if @performer.reviews.present?
   %hr
-  .col-sm-6
-    %h3.center Reviews
+  .col-sm-8.col-sm-offset-2
+    %h3.text-center Reviews
     - @performer.reviews.each do |review|
       .well.well-lg
         %p.strong= review.content

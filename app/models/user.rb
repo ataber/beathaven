@@ -36,4 +36,9 @@ class User < ActiveRecord::Base
   has_many :unscoped_bookings, class_name: "Booking"
   has_many :comments, inverse_of: :user
   has_many :reviews, inverse_of: :user
+
+  def payment_history
+    return unless stripe_customer_id
+    @payment_history ||= Stripe::Charge.all(customer: stripe_customer_id)
+  end
 end
