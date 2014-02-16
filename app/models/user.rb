@@ -31,9 +31,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :performers
-  has_many :bookings, -> { where active: true }
+  has_many :performers, inverse_of: :user
+  has_many :bookings, -> { where active: true }, inverse_of: :user
   has_many :unscoped_bookings, class_name: "Booking"
-  has_many :comments
-  has_many :reviews
+  has_many :comments, inverse_of: :user
+  has_many :reviews, inverse_of: :user
 end

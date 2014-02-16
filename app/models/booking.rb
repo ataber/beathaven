@@ -20,7 +20,7 @@ class Booking < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :performer
-  has_many :comments
+  has_many :comments, inverse_of: :booking
 
   def past?
     event_date < Date.today

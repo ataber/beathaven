@@ -12,6 +12,6 @@
 
 class Comment < ActiveRecord::Base
   validates_presence_of :content, :user_id, :booking_id
-  belongs_to :booking
+  belongs_to :booking, inverse_of: :comments
   belongs_to :user
 end
