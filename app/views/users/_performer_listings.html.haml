@@ -1,14 +1,15 @@
-- if @performers.exists?
-  %table.table
-    %tr
-      %th Name
-      %th View Bookings
-      %th Edit
+%table.table
+  %tr
+    %th Name
+    %th View Bookings
+    %th Edit
+  - if @performers.exists?
     - @performers.each do |p|
       %tr
         %td= p.name
-        %td= link_to "Bookings", performer_bookings_path(p)
-        %td= link_to "Edit Listing", edit_performer_path(p)
-- else
-  %br
-  %p.text-center.text-muted Nothing Here Yet
+        %td= link_to "Bookings", performer_bookings_path(p), class: "btn btn-primary"
+        %td= link_to "Edit Listing", edit_performer_path(p), class: "btn btn-primary"
+  - else
+    %tr
+      %td{colspan: "3"}
+        %h3.text-center.text-muted Nothing Here Yet

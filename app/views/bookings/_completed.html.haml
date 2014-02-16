@@ -1,0 +1,15 @@
+%table.table#completed-bookings
+  %tr
+    %th Event Date
+    %th Event Time
+    %th Cost
+  - if @completed.present?
+    - @completed.each do |booking|
+      %tr
+        %td= booking.event_date.to_date
+        %td= booking.event_time || "N/A"
+        %td= number_to_currency(booking.cost)
+  - else
+    %tr
+      %td{colspan: "3"}
+        %h3.text-center.text-muted Nothing Here Yet

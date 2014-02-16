@@ -1,10 +1,10 @@
-- if @past_bookings.present?
-  %table.table
-    %tr
-      %th Performer
-      %th Date
-      %th Time
-      %th Add Review
+%table.table
+  %tr
+    %th Performer
+    %th Date
+    %th Time
+    %th Add Review
+  - if @past_bookings.present?
     - @past_bookings.each do |booking|
       %tr
         %td= booking.performer.name
@@ -12,6 +12,7 @@
         %td= booking.event_time || "N/A"
         %td= link_to "Review", "#", class: "btn btn-primary", data: {toggle: "modal", target: "#performer-#{booking.performer.id}"}
         = render partial: "review_modal", locals: {performer: booking.performer, user_id: current_user.id}
-- else
-  %br
-  %p.text-center.text-muted Nothing Here Yet
+  - else
+    %tr
+      %td{colspan: "4"}
+        %h3.text-center.text-muted Nothing Here Yet

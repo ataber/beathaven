@@ -6,10 +6,15 @@
     %th Genre
     %th Listen
 
-  - @performers.each do |performer|
+  - if @performers.present?
+    - @performers.each do |performer|
+      %tr
+        %td= performer.name
+        %td= performer.genre
+        %td= link_to "Listen", performer
+  - else
     %tr
-      %td= performer.name
-      %td= performer.genre
-      %td= link_to "Listen", performer
+      %td{colspan: "3"}
+        %h3.text-center.text-muted No Results
 
 = will_paginate @performers

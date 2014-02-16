@@ -1,0 +1,17 @@
+%table.table#accepted-bookings
+  %tr
+    %th Event Date
+    %th Event Time
+    %th Cost
+    %th View Comments
+  - if @accepted.present?
+    - @accepted.each do |booking|
+      %tr
+        %td= booking.event_date.to_date
+        %td= booking.event_time || "N/A"
+        %td= number_to_currency(booking.cost)
+        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+  - else
+    %tr
+      %td{colspan: "6"}
+        %h3.text-center.text-muted Nothing Here Yet

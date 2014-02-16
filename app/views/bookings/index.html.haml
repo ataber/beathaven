@@ -1,52 +1,18 @@
 %h1= "Bookings for " + @performer.name
 
-- if @accepted.present?
-  %h4 Accepted Bookings
-  %table.table#accepted-bookings
-    %tr
-      %th Event Date
-      %th Event Time
-      %th Cost
-      %th View Comments
-    - @accepted.each do |booking|
-      %tr
-        %td= booking.event_date.to_date
-        %td= booking.event_time || "N/A"
-        %td= number_to_currency(booking.cost)
-        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+%ul.nav.nav-pills.nav-justified#bookings-index-tab
+  %li.active
+    = link_to "#accepted", data: {toggle: "tab"} do
+      Accepted Bookings
+  %li
+    = link_to "#pending", data: {toggle: "tab"} do
+      Pending Bookings
+  %li
+    = link_to "#completed", data: {toggle: "tab"} do
+      Completed Bookings
 
-- if @pending.present?
-  %h4 Pending Bookings
-  %table.table#pending-bookings
-    %tr
-      %th Event Date
-      %th Event Time
-      %th Cost
-      %th View Comments
-      %th Accept
-      %th Decline
-    - @pending.each do |booking|
-      %tr
-        %td= booking.event_date.to_date
-        %td= booking.event_time || "N/A"
-        %td= number_to_currency(booking.cost)
-        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
-        %td
-          = link_to accept_performer_booking_path(@performer, booking), class: "accept-link" do
-            %span.glyphicon.glyphicon-ok
-        %td
-          = link_to decline_performer_booking_path(@performer, booking), class: "decline-link", remote: true do
-            %span.glyphicon.glyphicon-remove
-
-- if @completed.present?
-  %h4 Completed Bookings
-  %table.table#completed-bookings
-    %tr
-      %th Event Date
-      %th Event Time
-      %th Cost
-    - @completed.each do |booking|
-      %tr
-        %td= booking.event_date.to_date
-        %td= booking.event_time || "N/A"
-        %td= number_to_currency(booking.cost)
+%br
+.tab-content
+  .tab-pane.fade.in.active#accepted= render partial: "accepted"
+  .tab-pane.fade#pending= render partial: "pending"
+  .tab-pane.fade#completed= render partial: "completed"

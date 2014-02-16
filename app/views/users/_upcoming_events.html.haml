@@ -1,18 +1,19 @@
-- if @upcoming_bookings.present?
-  %table.table
-    %tr
-      %th Performer
-      %th Date
-      %th Time
-      %th Comments
-      %th Accepted?
+%table.table
+  %tr
+    %th Performer
+    %th Date
+    %th Time
+    %th Comments
+    %th Accepted?
+  - if @upcoming_bookings.present?
     - @upcoming_bookings.each do |booking|
       %tr
         %td= booking.performer.name
         %td= booking.event_date
         %td= booking.event_time || "N/A"
-        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id })
+        %td= link_to "Comments", comments_path(:params => { :booking_id => booking.id }), class: "btn btn-primary"
         %td= booking.accepted? ? "Yes" : "No"
-- else
-  %br
-  %p.text-center.text-muted Nothing Here Yet
+  - else
+    %tr
+      %td{colspan: "5"}
+        %h3.text-center.text-muted Nothing Here Yet
