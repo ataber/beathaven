@@ -2,19 +2,21 @@
 #
 # Table name: performers
 #
-#  id             :integer          not null, primary key
-#  name           :string(255)
-#  user_id        :integer
-#  genre          :string(255)
-#  created_at     :datetime
-#  updated_at     :datetime
-#  soundcloud_url :string(255)
-#  description    :text
-#  price          :decimal(8, 2)
+#  id                 :integer          not null, primary key
+#  name               :string(255)
+#  user_id            :integer
+#  genre              :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  soundcloud_url     :string(255)
+#  description        :text
+#  price              :decimal(8, 2)
+#  legal_billing_name :string(255)
+#  bank_number        :integer
 #
 
 class Performer < ActiveRecord::Base
-  validates_presence_of :name, :price
+  validates_presence_of :name, :price, :bank_number, :legal_billing_name
 
   belongs_to :user, inverse_of: :performers
   has_many :bookings, -> { where active: true }, inverse_of: :performer
