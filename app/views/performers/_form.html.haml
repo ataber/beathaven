@@ -1,4 +1,5 @@
 = form_for @performer, html: { class: "form-horizontal", role: "form", id: "performer-form" } do |f|
+  // TODO FIXME: three different error divs here ugh
   - if @performer.errors.any?
     #error_explanation
       %h2= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"

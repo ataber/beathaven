@@ -26,16 +26,16 @@ $("#performer-form").ready ->
     })
 
   submitHandler = (form) ->
-        routingNumber = $(".routing-number").val()
-        Stripe.bankAccount.validateRoutingNumber(routingNumber, 'US')
-        accountNumber = $(".account-number").val()
-        Stripe.bankAccount.validateAccountNumber(accountNumber, 'US')
-        Stripe.bankAccount.createToken({
-          country: "US",
-          routingNumber: routingNumber,
-          accountNumber: accountNumber
-          }, stripeResponseHandler)
-        form.submit()
+    routingNumber = $(".routing-number").val()
+    Stripe.bankAccount.validateRoutingNumber(routingNumber, 'US')
+    accountNumber = $(".account-number").val()
+    Stripe.bankAccount.validateAccountNumber(accountNumber, 'US')
+    Stripe.bankAccount.createToken({
+      country: "US",
+      routingNumber: routingNumber,
+      accountNumber: accountNumber
+      }, stripeResponseHandler)
+    form.submit()
 
   stripeResponseHandler = (status, response) ->
     if response.error
