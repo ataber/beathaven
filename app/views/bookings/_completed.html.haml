@@ -1,15 +1,19 @@
+%p.text-muted.text-center
+  Transfers to your performer's bank account can take up to a week to process.
 %table.table.table-bordered#completed-bookings
   %tr
     %th Event Date
     %th Event Time
     %th Cost
+    %th Status of Payment
   - if @completed.present?
     - @completed.each do |booking|
       %tr
         %td= booking.event_date.to_date
         %td= booking.event_time || "N/A"
         %td= number_to_currency(booking.cost)
+        %td= booking.transfer.status
   - else
     %tr
-      %td{colspan: "3"}
+      %td{colspan: "4"}
         %h3.text-center.text-muted Nothing Here Yet

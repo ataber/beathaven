@@ -1,31 +1,54 @@
-= form_for @performer, html: { class: "form-horizontal", role: "form" } do |f|
+= form_for @performer, html: { class: "form-horizontal", role: "form", id: "performer-form" } do |f|
   - if @performer.errors.any?
     #error_explanation
       %h2= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"
       %ul
         - @performer.errors.full_messages.each do |msg|
           %li= msg
+  .payment-errors.text-danger.text-center
+  .form-errors.text-danger.text-center
 
   .form-group
-    = f.label(:name, "Name", class: "col-sm-2 control-label")
+    = f.label(:name, "Performer Name", class: "col-sm-2 control-label")
     .col-sm-4
       = f.text_field(:name, class: "form-control", type: "text")
   .form-group
     = f.label(:soundcloud_url, "Soundcloud URL", class: "col-sm-2 control-label")
     .col-sm-4
       = f.text_field(:soundcloud_url, class: "form-control", type: "text")
-      %span.help-block Pick a song or set on Soundcloud that shows off your music, and we'll embed it automatically in your listing
+    %p.help-block Pick a song or set on Soundcloud that shows off your music, and we'll embed it automatically in your listing
   .form-group
     = f.label(:description, "Description", class: "col-sm-2 control-label")
     .col-sm-4
       = f.text_area(:description, class: "form-control", type: "text")
   .form-group
-    = f.label(:genre, "Genre(s)", class: "col-sm-2 control-label")
+    = f.label(:genre, "Genre", class: "col-sm-2 control-label")
     .col-sm-4#genre-select
-      = select_tag(:genre, options_for_genre(@performer.genre), class: "form-control", type: "select")
+      = f.select(:genre, options_for_genre(@performer.genre), {}, {class: "form-control", type: "select"})
   .form-group
     = f.label(:price, "Price Per Gig ($)", class: "col-sm-2 control-label")
     .col-sm-4
       = f.number_field(:price, class: "form-control", type: "number")
-  .col-sm-offset-2
+  %hr
+    %h2 Billing Information
+    %p.help-block These fields will allow us to transfer to your bank account
+    .form-group
+      = label_tag :legal_billing_name, "Legal Billing Name", class: "col-sm-2 control-label"
+      .col-sm-4
+        = text_field_tag :legal_billing_name, "", class: "form-control legal-billing-name", type: "text"
+      %p.help-block
+        Enter the name on the bank account
+    .form-group
+      = label_tag :billing_email, "Billing Email", class: "col-sm-2 control-label"
+      .col-sm-4
+        = text_field_tag :billing_email, nil, class: "form-control billing-email", type: "text"
+    .form-group
+      = label_tag :routing_number, "Routing Number", class: "col-sm-2 control-label"
+      .col-sm-4
+        = text_field_tag :routing_number, nil, class: "form-control routing-number", type: "text"
+    .form-group
+      = label_tag :account_number, "Account Number", class: "col-sm-2 control-label"
+      .col-sm-4
+        = text_field_tag :account_number, nil, class: "form-control account-number", type: "text"
+  .col-sm-offset-5
     = f.submit 'Save', class: "btn btn-primary"

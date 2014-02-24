@@ -11,6 +11,7 @@
 #  soundcloud_url :string(255)
 #  description    :text
 #  price          :decimal(8, 2)
+#  recipient_id   :string(255)
 #
 
 require 'spec_helper'

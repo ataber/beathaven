@@ -6,11 +6,13 @@
   %tr
     %th Amount
     %th Card Number
+    %th Date Billed
   - if (history = current_user.payment_history)
     - history.each do |payment|
       %tr
         %td= number_to_currency(payment.amount/100)
         %td= "************" + payment.card.last4
+        %td= Time.at(payment.created).strftime("%d/%m/%Y")
   - else
     %tr
-      %td.text-center.text-muted{colspan: "2"} Nothing Yet
+      %td.text-center.text-muted{colspan: "3"} Nothing Yet

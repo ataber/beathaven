@@ -1,0 +1,50 @@
+$("#performer-form").ready ->
+  Stripe.setPublishableKey("<%= ENV["STRIPE_API_KEY"] %>")
+
+  validateForm = ->
+    $("#performer-form").validate({
+      errorClass: "text-danger",
+      rules: {
+        legal_billing_name: "required",
+        routing_number: "required",
+        account_number: "required",
+        billing_email: {
+          required: true,
+          email: true
+        }
+      },
+      messages: {
+        legal_billing_name: "Please specify legal billing name",
+        routing_number: "Please specify routing number",
+        account_number: "Please specify account number",
+        billing_email: {
+          required: "Please specify billing email",
+          email: 'Billing email must be in email format'
+        }
+      },
+      submitHandler: submitHandler
+    })
+
+  submitHandler = (form) ->
+        routingNumber = $(".routing-number").val()
+        Stripe.bankAccount.validateRoutingNumber(routingNumber, 'US')
+        accountNumber = $(".account-number").val()
+        Stripe.bankAccount.validateAccountNumber(accountNumber, 'US')
+        Stripe.bankAccount.createToken({
+          country: "US",
+          routingNumber: routingNumber,
+          accountNumber: accountNumber
+          }, stripeResponseHandler)
+        form.submit()
+
+  stripeResponseHandler = (status, response) ->
+    if response.error
+      $(".payment-errors").text(response.error.message)
+      return false
+    else
+      payment_form = $("#performer-form")
+      token = response["id"]
+      payment_form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+      payment_form.get(0).submit()
+
+  validateForm()

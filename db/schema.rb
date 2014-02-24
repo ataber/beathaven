@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140216083510) do
+ActiveRecord::Schema.define(version: 20140218052854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140216083510) do
     t.time     "event_time"
     t.integer  "user_id"
     t.boolean  "active",                               default: true
+    t.string   "transfer_id"
   end
 
   create_table "comments", force: true do |t|
@@ -44,9 +45,8 @@ ActiveRecord::Schema.define(version: 20140216083510) do
     t.datetime "updated_at"
     t.string   "soundcloud_url"
     t.text     "description"
-    t.decimal  "price",              precision: 8, scale: 2
-    t.string   "legal_billing_name"
-    t.integer  "bank_number"
+    t.decimal  "price",          precision: 8, scale: 2
+    t.string   "recipient_id"
   end
 
   create_table "reviews", force: true do |t|

@@ -12,6 +12,7 @@
 #  event_time   :time
 #  user_id      :integer
 #  active       :boolean          default(TRUE)
+#  transfer_id  :string(255)
 #
 
 class Booking < ActiveRecord::Base
@@ -24,6 +25,11 @@ class Booking < ActiveRecord::Base
 
   def past?
     event_date < Date.today
+  end
+
+  def transfer
+    raise "No transfer id associated with this booking!" unless transfer_id
+    @transfer ||= Stripe::Transfer.retrieve(transfer_id)
   end
 
   private

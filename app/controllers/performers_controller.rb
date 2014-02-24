@@ -10,7 +10,7 @@ class PerformersController < ApplicationController
   end
 
   def show
-    if url = @performer.soundcloud_url.presence
+    if url = @performer.soundcloud_url
       client      = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_ID'])
       @embed_info = client.get('/oembed', :url => url, :maxwidth => "500", :maxheight => "500")
     end
@@ -26,6 +26,7 @@ class PerformersController < ApplicationController
 
   def create
     @performer = Performer.new(performer_params)
+    create_stripe_record(@performer)
 
     respond_to do |format|
       if @performer.save
@@ -50,15 +51,16 @@ class PerformersController < ApplicationController
     end
   end
 
-  def destroy
-    @performer.destroy
-    respond_to do |format|
-      format.html { redirect_to performers_url }
-      format.json { head :no_content }
-    end
-  end
-
   private
+  def create_stripe_record(performer)
+    recipient = Stripe::Recipient.create(
+      name: params.require(:legal_billing_name),
+      type: "individual",
+      email: params.require(:billing_email),
+      bank_account: params.require(:stripeToken)
+      )
+    performer.recipient_id = recipient.id
+  end
 
   def authorized_to_edit?
     if current_user != @performer.user
