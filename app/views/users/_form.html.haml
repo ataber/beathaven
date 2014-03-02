@@ -1,10 +1,10 @@
 = form_for @user, html: { class: "form-horizontal", role: "form" } do |f|
   - if @user.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"
-      %ul
+    .text-danger
+      %h4= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"
+      %ul.list-group
         - @user.errors.full_messages.each do |msg|
-          %li= msg
+          %li.list-group-item= msg
 
   .form-group
     = f.label(:email, "email", class: "col-sm-2 col-sm-offset-2 control-label")

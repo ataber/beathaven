@@ -30,20 +30,24 @@ class BookingsController < ApplicationController
     if (customer_id = user.stripe_customer_id)
       Booking.transaction do
         raise "No recipient ID for #{booking.performer.name}" unless booking.performer.recipient_id
-        Stripe::Charge.create(
-          amount:  (booking.cost*100).to_i,
-          currency: "usd",
-          customer: customer_id
-          )
-        transfer = Stripe::Transfer.create(
-          amount: (booking.cost*100).to_i,
-          currency: "usd",
-          recipient: booking.performer.recipient_id,
-          statement_descriptor: "Booking for #{booking.performer.name} on #{booking.date}"
-          )
-        booking.transfer_id = transfer.id
-        booking.accepted = true
-        booking.save!
+        begin
+          Stripe::Charge.create(
+            amount:  (booking.cost*100).to_i,
+            currency: "usd",
+            customer: customer_id
+            )
+          transfer = Stripe::Transfer.create(
+            amount: (booking.cost*100).to_i,
+            currency: "usd",
+            recipient: booking.performer.recipient_id,
+            statement_descriptor: "Booking for #{booking.performer.name} on #{booking.date}"
+            )
+          booking.transfer_id = transfer.id
+          booking.accepted = true
+          booking.save!
+        rescue Stripe::CardError => e
+          flash[:error] = e.message
+        end
       end
     else
       flash[:error] = "The user that requested this booking doesn't have any payment info associated"

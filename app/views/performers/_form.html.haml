@@ -1,11 +1,11 @@
 = form_for @performer, html: { class: "form-horizontal", role: "form", id: "performer-form" } do |f|
   // TODO FIXME: three different error divs here ugh
   - if @performer.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"
-      %ul
+    .text-danger
+      %h4= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"
+      %ul.list-group
         - @performer.errors.full_messages.each do |msg|
-          %li= msg
+          %li.list-group-item= msg
   .payment-errors.text-danger.text-center
   .form-errors.text-danger.text-center
 
@@ -30,26 +30,28 @@
     = f.label(:price, "Price Per Gig ($)", class: "col-sm-2 control-label")
     .col-sm-4
       = f.number_field(:price, class: "form-control", type: "number")
+  = f.hidden_field(:user_id, value: current_user.id)
   %hr
     %h2 Billing Information
-    %p.help-block These fields will allow us to transfer to your bank account
-    .form-group
-      = label_tag :legal_billing_name, "Legal Billing Name", class: "col-sm-2 control-label"
-      .col-sm-4
-        = text_field_tag :legal_billing_name, "", class: "form-control legal-billing-name", type: "text"
-      %p.help-block
-        Enter the name on the bank account
-    .form-group
-      = label_tag :billing_email, "Billing Email", class: "col-sm-2 control-label"
-      .col-sm-4
-        = text_field_tag :billing_email, nil, class: "form-control billing-email", type: "text"
-    .form-group
-      = label_tag :routing_number, "Routing Number", class: "col-sm-2 control-label"
-      .col-sm-4
-        = text_field_tag :routing_number, nil, class: "form-control routing-number", type: "text"
-    .form-group
-      = label_tag :account_number, "Account Number", class: "col-sm-2 control-label"
-      .col-sm-4
-        = text_field_tag :account_number, nil, class: "form-control account-number", type: "text"
+    .billing
+      %p.help-block These fields will allow us to transfer to your bank account
+      .form-group
+        = label_tag :legal_billing_name, "Legal Billing Name", class: "col-sm-2 control-label"
+        .col-sm-4
+          = text_field_tag :legal_billing_name, "", class: "form-control legal-billing-name", type: "text"
+        %p.help-block
+          Enter the name on the bank account
+      .form-group
+        = label_tag :billing_email, "Billing Email", class: "col-sm-2 control-label"
+        .col-sm-4
+          = text_field_tag :billing_email, nil, class: "form-control billing-email", type: "text"
+      .form-group
+        = label_tag :routing_number, "Routing Number", class: "col-sm-2 control-label"
+        .col-sm-4
+          = text_field_tag :routing_number, nil, class: "form-control routing-number", type: "text"
+      .form-group
+        = label_tag :account_number, "Account Number", class: "col-sm-2 control-label"
+        .col-sm-4
+          = text_field_tag :account_number, nil, class: "form-control account-number", type: "text"
   .col-sm-offset-5
-    = f.submit 'Save', class: "btn btn-primary"
+    = f.submit 'Save', class: "btn btn-primary", id: "performer-submit"

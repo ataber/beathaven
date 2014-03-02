@@ -1,5 +1,5 @@
-$("#performer-form").ready ->
-  Stripe.setPublishableKey("<%= ENV["STRIPE_API_KEY"] %>")
+$ ->
+  Stripe.setPublishableKey("<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>")
 
   validateForm = ->
     $("#performer-form").validate({
@@ -26,25 +26,23 @@ $("#performer-form").ready ->
     })
 
   submitHandler = (form) ->
+    $("#performer-submit").prop("disable", true)
     routingNumber = $(".routing-number").val()
-    Stripe.bankAccount.validateRoutingNumber(routingNumber, 'US')
     accountNumber = $(".account-number").val()
-    Stripe.bankAccount.validateAccountNumber(accountNumber, 'US')
     Stripe.bankAccount.createToken({
       country: "US",
       routingNumber: routingNumber,
       accountNumber: accountNumber
-      }, stripeResponseHandler)
-    form.submit()
+    }, stripeResponseHandler)
 
   stripeResponseHandler = (status, response) ->
     if response.error
+      $("#performer-submit").prop("disable", false)
       $(".payment-errors").text(response.error.message)
-      return false
     else
       payment_form = $("#performer-form")
       token = response["id"]
-      payment_form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+      payment_form.append($("<input type='hidden' name='stripeToken' />").val(token))
       payment_form.get(0).submit()
 
   validateForm()

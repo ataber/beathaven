@@ -15,7 +15,7 @@
 #
 
 class Performer < ActiveRecord::Base
-  validates_presence_of :name, :price, :recipient_id
+  validates_presence_of :name, :price, :recipient_id, :user_id
 
   belongs_to :user, inverse_of: :performers
   has_many :bookings, -> { where active: true }, inverse_of: :performer

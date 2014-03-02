@@ -10,7 +10,7 @@ class PerformersController < ApplicationController
   end
 
   def show
-    if url = @performer.soundcloud_url
+    if url = @performer.soundcloud_url.presence
       client      = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_ID'])
       @embed_info = client.get('/oembed', :url => url, :maxwidth => "500", :maxheight => "500")
     end
@@ -40,6 +40,8 @@ class PerformersController < ApplicationController
   end
 
   def update
+    update_stripe_record(@performer)
+
     respond_to do |format|
       if @performer.update(performer_params)
         format.html { redirect_to @performer, notice: 'Listing was successfully updated.' }
@@ -62,6 +64,17 @@ class PerformersController < ApplicationController
     performer.recipient_id = recipient.id
   end
 
+  def update_stripe_record(performer)
+    recipient = Stripe::Recipient.retrieve(recipient_id)
+    recipient.update(
+      name: params.require(:legal_billing_name),
+      type: "individual",
+      email: params.require(:billing_email),
+      bank_account: params.require(:stripeToken)
+      )
+    recipient.save
+  end
+
   def authorized_to_edit?
     if current_user != @performer.user
       flash[:error] = "You are not authorized to edit that listing"
@@ -75,6 +88,6 @@ class PerformersController < ApplicationController
   end
 
   def performer_params
-    params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre)
+    params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre, :user_id)
   end
 end
