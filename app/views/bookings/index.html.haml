@@ -1,4 +1,8 @@
-%h1= "Bookings for " + @performer.name
+%h2
+  Bookings for
+  = @performer.name
+  %small
+    = link_to "Edit Listing", edit_performer_path(@performer)
 
 %ul.nav.nav-pills.nav-justified#bookings-index-tab
   %li.active

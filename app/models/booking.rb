@@ -28,7 +28,7 @@ class Booking < ActiveRecord::Base
   end
 
   def transfer
-    raise "No transfer id associated with this booking!" unless transfer_id
+    return unless transfer_id
     @transfer ||= Stripe::Transfer.retrieve(transfer_id)
   end
 

@@ -1,5 +1,6 @@
 class BookingsController < ApplicationController
   before_filter :find_performer
+  before_filter :check_recipient_id, only: [:accept]
 
   def index
     @bookings = @performer.bookings.sort_by(&:created_at)
@@ -40,7 +41,7 @@ class BookingsController < ApplicationController
             amount: (booking.cost*100).to_i,
             currency: "usd",
             recipient: booking.performer.recipient_id,
-            statement_descriptor: "Booking for #{booking.performer.name} on #{booking.date}"
+            statement_descriptor: "Booking for #{booking.performer.name} on #{booking.event_date}"
             )
           booking.transfer_id = transfer.id
           booking.accepted = true
@@ -71,6 +72,13 @@ class BookingsController < ApplicationController
         description: params.require(:stripeEmail)
         )
       current_user.update_attribute(:stripe_customer_id, customer.id)
+    end
+  end
+
+  def check_recipient_id
+    if @performer.recipient_id.blank?
+      flash[:error] = "This performer has no bank info associated, please update your listing"
+      redirect_to edit_performer_path(@performer)
     end
   end
 

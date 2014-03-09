@@ -1,4 +1,4 @@
-$ ->
+$("#performer-form").ready ->
   Stripe.setPublishableKey("<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>")
 
   validateForm = ->
@@ -26,7 +26,7 @@ $ ->
     })
 
   submitHandler = (form) ->
-    $("#performer-submit").prop("disable", true)
+    $("#performer-submit").prop("disabled", true)
     routingNumber = $(".routing-number").val()
     accountNumber = $(".account-number").val()
     Stripe.bankAccount.createToken({
@@ -37,7 +37,7 @@ $ ->
 
   stripeResponseHandler = (status, response) ->
     if response.error
-      $("#performer-submit").prop("disable", false)
+      $("#performer-submit").prop("disabled", false)
       $(".payment-errors").text(response.error.message)
     else
       payment_form = $("#performer-form")

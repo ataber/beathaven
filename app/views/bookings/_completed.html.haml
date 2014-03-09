@@ -12,7 +12,11 @@
         %td= booking.event_date.to_date
         %td= booking.event_time || "N/A"
         %td= number_to_currency(booking.cost)
-        %td= booking.transfer.status
+        - if booking.transfer
+          %td= booking.transfer.status.humanize
+        - else
+          %td
+            = link_to "No Payment, Contact Support", "mailto:support@beathavenapp.com"
   - else
     %tr
       %td{colspan: "4"}

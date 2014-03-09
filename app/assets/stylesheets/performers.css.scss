@@ -1,0 +1,49 @@
+#performer-index {
+
+  a:hover > .dark-overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: #000;
+      border-radius: 20px;
+      opacity: 0.4;
+  }
+
+  .thumbnail {
+    border: none;
+    position: relative;
+    padding: initial;
+    z-index: 2;
+
+    .text-overlay {
+      color: white;
+      font-size: 29px;
+      line-height: 1.2;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+      position: absolute;
+      padding-right: 10%;
+      padding-left: 10%;
+      margin-top: 20%;
+      width: 100%;
+      text-align: center;
+
+      small {
+        font-size: 18px;
+      }
+    }
+
+    img {
+      border-radius: 20px;
+      width: 100%;
+    }
+  }
+}
+
+#performer-form {
+  .form-group {
+    .file-upload {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}

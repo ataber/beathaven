@@ -1,20 +1,16 @@
 %h1 Performers
 
-%table.table.table-hover.table-bordered
-  %tr
-    %th Name
-    %th Genre
-    %th Listen
-
+#performer-index
   - if @performers.present?
     - @performers.each do |performer|
-      %tr
-        %td= performer.name
-        %td= performer.genre
-        %td= link_to "Listen", performer
+      .col-xs-6.col-md-3.performer-item
+        = link_to performer, class: "thumbnail" do
+          .dark-overlay
+          .text-overlay
+            %h2= performer.name
+            %small= performer.description
+          = image_tag performer.avatar.url(:medium), class: "image-responsive"
   - else
-    %tr
-      %td{colspan: "3"}
-        %h3.text-center.text-muted No Results
+    %h3.text-center.text-muted No Results
 
-= will_paginate @performers
+  = will_paginate @performers

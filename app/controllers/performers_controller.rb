@@ -40,7 +40,7 @@ class PerformersController < ApplicationController
   end
 
   def update
-    update_stripe_record(@performer)
+    create_stripe_record(@performer) unless @performer.recipient_id.present? 
 
     respond_to do |format|
       if @performer.update(performer_params)
@@ -64,17 +64,6 @@ class PerformersController < ApplicationController
     performer.recipient_id = recipient.id
   end
 
-  def update_stripe_record(performer)
-    recipient = Stripe::Recipient.retrieve(recipient_id)
-    recipient.update(
-      name: params.require(:legal_billing_name),
-      type: "individual",
-      email: params.require(:billing_email),
-      bank_account: params.require(:stripeToken)
-      )
-    recipient.save
-  end
-
   def authorized_to_edit?
     if current_user != @performer.user
       flash[:error] = "You are not authorized to edit that listing"
@@ -88,6 +77,6 @@ class PerformersController < ApplicationController
   end
 
   def performer_params
-    params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre, :user_id)
+    params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre, :user_id, :avatar)
   end
 end
