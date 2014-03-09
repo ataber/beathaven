@@ -40,7 +40,7 @@ class PerformersController < ApplicationController
   end
 
   def update
-    create_stripe_record(@performer) unless @performer.recipient_id.present? 
+    create_stripe_record(@performer) unless @performer.recipient_id.present?
 
     respond_to do |format|
       if @performer.update(performer_params)
