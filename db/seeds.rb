@@ -1,3 +1,4 @@
+raise "Use `foreman run` before this command to use environment variables" unless ENV.present?
 user = User.create(:email => "andrew.e.taber@gmail.com", :password => "nutpalace", :password_confirmation => "nutpalace")
 user2 = User.create(:email => "jesus.shuttlesworth@gmail.com", :password => "rayallenfor3", :password_confirmation => "rayallenfor3")
 User.create(:email => "king.james@gmail.com", :password => "fuckyoukobe", :password_confirmation => "fuckyoukobe")
