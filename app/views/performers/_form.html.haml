@@ -60,4 +60,4 @@
         .col-sm-4
           = text_field_tag :account_number, nil, class: "form-control account-number", type: "text"
   .col-sm-offset-5
-    = f.submit 'Save', class: "btn btn-primary", id: "performer-submit"
+    = f.submit 'Save', disabled: true, class: "btn btn-primary", id: "performer-submit"

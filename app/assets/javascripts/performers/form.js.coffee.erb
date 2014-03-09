@@ -2,6 +2,7 @@ $("#performer-form").ready ->
   Stripe.setPublishableKey("<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>")
 
   validateForm = ->
+    $("#performer-submit").prop("disabled", false)
     $("#performer-form").validate({
       errorClass: "text-danger",
       rules: {
