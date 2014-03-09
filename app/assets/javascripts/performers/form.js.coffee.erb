@@ -1,6 +1,12 @@
 $("#performer-form").ready ->
   Stripe.setPublishableKey("<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>")
 
+  $(@).on "click", "#show-billing-field", (event) ->
+    event.preventDefault()
+    $("#performer-submit").data("stripesubmit", "true")
+    $(".billing").find("input").each ->
+      $(@).prop("disabled", false)
+
   validateForm = ->
     $("#performer-submit").prop("disabled", false)
     $("#performer-form").validate({
@@ -28,13 +34,16 @@ $("#performer-form").ready ->
 
   submitHandler = (form) ->
     $("#performer-submit").prop("disabled", true)
-    routingNumber = $(".routing-number").val()
-    accountNumber = $(".account-number").val()
-    Stripe.bankAccount.createToken({
-      country: "US",
-      routingNumber: routingNumber,
-      accountNumber: accountNumber
-    }, stripeResponseHandler)
+    if $("#performer-submit").data("stripesubmit") == "true"
+      routingNumber = $(".routing-number").val()
+      accountNumber = $(".account-number").val()
+      Stripe.bankAccount.createToken({
+        country: "US",
+        routingNumber: routingNumber,
+        accountNumber: accountNumber
+      }, stripeResponseHandler)
+    else
+      $("#performer-form").get(0).submit()
 
   stripeResponseHandler = (status, response) ->
     if response.error

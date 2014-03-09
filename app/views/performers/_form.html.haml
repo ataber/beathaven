@@ -6,7 +6,7 @@
       %ul.list-group
         - @performer.errors.full_messages.each do |msg|
           %li.list-group-item= msg
-  .payment-errors.text-danger.text-center
+  .payment-errors.text-danger
   .form-errors.text-danger.text-center
 
   .form-group
@@ -30,34 +30,22 @@
     = f.label(:price, "Price Per Gig ($)", class: "col-sm-2 control-label")
     .col-sm-4
       = f.number_field(:price, class: "form-control", type: "number")
-  .form-group
-    = f.label(:avatar, "Cover Image", class: "col-sm-2 control-label")
-    .col-sm-4
-      = f.file_field :avatar, class: "form-control file-upload", type: "file"
-      %p.help-block We will display this image when users search for you
+  - if @performer.new_record?
+    .form-group
+      = f.label(:avatar, "Cover Image", class: "col-sm-2 control-label")
+      .col-sm-4
+        = f.file_field :avatar, class: "form-control file-upload", type: "file"
+        %p.help-block We will display this image when users search for you
   = f.hidden_field(:user_id, value: current_user.id)
 
   %hr
-    %h2 Billing Information
-    .billing
-      %p.help-block These fields will allow us to transfer to your bank account
-      .form-group
-        = label_tag :legal_billing_name, "Legal Billing Name", class: "col-sm-2 control-label"
-        .col-sm-4
-          = text_field_tag :legal_billing_name, "", class: "form-control legal-billing-name", type: "text"
-        %p.help-block
-          Enter the name on the bank account
-      .form-group
-        = label_tag :billing_email, "Billing Email", class: "col-sm-2 control-label"
-        .col-sm-4
-          = text_field_tag :billing_email, nil, class: "form-control billing-email", type: "text"
-      .form-group
-        = label_tag :routing_number, "Routing Number", class: "col-sm-2 control-label"
-        .col-sm-4
-          = text_field_tag :routing_number, nil, class: "form-control routing-number", type: "text"
-      .form-group
-        = label_tag :account_number, "Account Number", class: "col-sm-2 control-label"
-        .col-sm-4
-          = text_field_tag :account_number, nil, class: "form-control account-number", type: "text"
+  %h2 Billing Information
+  - recipient = @performer.recipient_id.present?
+  - if recipient
+    %p We already have billing information for this performer
+    = link_to "#", id: "show-billing-field" do
+      %button.btn.btn-primary Update Billing
+  = render partial: "billing_form", locals: {recipient: recipient}
+
   .col-sm-offset-5
-    = f.submit 'Save', disabled: true, class: "btn btn-primary", id: "performer-submit"
+    = f.submit 'Save', disabled: true, class: "btn btn-primary", id: "performer-submit", data: {stripesubmit: !recipient}
