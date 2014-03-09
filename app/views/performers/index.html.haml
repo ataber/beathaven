@@ -9,7 +9,7 @@
           .text-overlay
             %h2= performer.name
             %small= performer.description
-          -# performer.avatar.options[:url] = ":s3_domain_url"
+          - performer.avatar.options[:url] = ":s3_domain_url"
           = image_tag performer.avatar.url(:medium), class: "image-responsive"
   - else
     %h3.text-center.text-muted No Results
