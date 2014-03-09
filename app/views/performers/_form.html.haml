@@ -42,7 +42,7 @@
   - recipient = @performer.recipient_id.present?
   - if recipient
     %p We already have billing information for this performer
-    = link_to "#", id: "show-billing-field" do
+    = link_to "#", id: "show-billing-form" do
       %button.btn.btn-primary Update Billing
   = render partial: "billing_form", locals: {recipient: recipient}
 
