@@ -4,8 +4,8 @@ class PerformersController < ApplicationController
 
   def index
     scope = Performer.all
-    scope = scope.genre_like(params[:genre]) if params[:genre].present?
-    scope = scope.name_like(params[:search_text]) if params[:search_text].present?
+    scope = scope.genre_like(genre) if genre
+    scope = scope.search(search_text) if search_text
     @performers = scope.paginate(:page => params[:page], :per_page => 20)
   end
 
@@ -76,7 +76,15 @@ class PerformersController < ApplicationController
     @performer = Performer.find(params[:id])
   end
 
+  def genre
+    params.permit(:genre)[:genre]
+  end
+
+  def search_text
+    params.permit(:search_text)[:search_text]
+  end
+
   def performer_params
-    params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre, :user_id, :avatar)
+    params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre, :user_id, :avatar, :location)
   end
 end
