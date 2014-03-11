@@ -2,6 +2,8 @@ class BookingsController < ApplicationController
   before_filter :find_performer
   before_filter :check_recipient_id, only: [:accept]
 
+  CHARGE_FEE_PERCENT = 0.05
+
   def index
     @bookings = @performer.bookings.sort_by(&:created_at)
     @accepted, @pending = @bookings.partition(&:accepted?)
@@ -33,12 +35,13 @@ class BookingsController < ApplicationController
         raise "No recipient ID for #{booking.performer.name}" unless booking.performer.recipient_id
         begin
           Stripe::Charge.create(
-            amount:  (booking.cost*100).to_i,
+            amount: cost_in_cents(booking.cost),
             currency: "usd",
-            customer: customer_id
+            customer: customer_id,
+            application_fee: charge_fee_in_cents(booking.cost)
             )
           transfer = Stripe::Transfer.create(
-            amount: (booking.cost*100).to_i,
+            amount: cost_in_cents(booking.cost),
             currency: "usd",
             recipient: booking.performer.recipient_id,
             statement_descriptor: "Booking for #{booking.performer.name} on #{booking.event_date}"
@@ -73,6 +76,14 @@ class BookingsController < ApplicationController
         )
       current_user.update_attribute(:stripe_customer_id, customer.id)
     end
+  end
+
+  def cost_in_cents(cost)
+    (cost * 100).to_i
+  end
+
+  def charge_fee_in_cents(cost)
+    ((cost * 100) * CHARGE_FEE_PERCENT).to_i
   end
 
   def check_recipient_id
