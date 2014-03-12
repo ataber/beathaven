@@ -3,6 +3,7 @@ class BookingsController < ApplicationController
   before_filter :check_recipient_id, only: [:accept]
 
   CHARGE_FEE_PERCENT = 0.05
+  TRANSFER_FEE_PERCENT = 0.05
 
   def index
     @bookings = @performer.bookings.sort_by(&:created_at)
@@ -35,15 +36,17 @@ class BookingsController < ApplicationController
         raise "No recipient ID for #{booking.performer.name}" unless booking.performer.recipient_id
         begin
           Stripe::Charge.create(
-            amount: cost_in_cents(booking.cost),
+            amount: charge_amount(booking.cost),
             currency: "usd",
             customer: customer_id,
-            application_fee: charge_fee_in_cents(booking.cost)
+            application_fee: charge_fee(booking.cost),
+            description: "Booking for #{booking.performer.name} on #{booking.event_date}"
             )
           transfer = Stripe::Transfer.create(
-            amount: cost_in_cents(booking.cost),
+            amount: transfer_amount(booking.cost),
             currency: "usd",
             recipient: booking.performer.recipient_id,
+            description: "Booking for #{booking.performer.name} on #{booking.event_date}",
             statement_descriptor: "Booking for #{booking.performer.name} on #{booking.event_date}"
             )
           booking.transfer_id = transfer.id
@@ -54,7 +57,7 @@ class BookingsController < ApplicationController
         end
       end
     else
-      flash[:error] = "The user that requested this booking doesn't have any payment info associated"
+      flash[:error] = "The user that requested this booking doesn't have any payment info associated, please contact support@beathavenapp.com"
     end
     redirect_to performer_bookings_path(@performer)
   end
@@ -78,12 +81,16 @@ class BookingsController < ApplicationController
     end
   end
 
-  def cost_in_cents(cost)
+  def charge_amount(cost)
     (cost * 100).to_i
   end
 
-  def charge_fee_in_cents(cost)
+  def charge_fee(cost)
     ((cost * 100) * CHARGE_FEE_PERCENT).to_i
+  end
+
+  def transfer_amount(cost)
+    ((cost * 100) * (1 - TRANSFER_FEE_PERCENT)).to_i
   end
 
   def check_recipient_id
