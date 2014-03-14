@@ -5,6 +5,7 @@ $(document).on "click", "#show-billing-form", (event) ->
     $(@).prop("disabled", false)
 
 $("#performer-form").ready ->
+
   Stripe.setPublishableKey("<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>")
 
   validateForm = ->
