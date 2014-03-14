@@ -8,6 +8,7 @@
 #  user_id      :integer
 #  performer_id :integer
 #  content      :text
+#  hidden       :boolean          default(FALSE), not null
 #
 
 class Review < ActiveRecord::Base
