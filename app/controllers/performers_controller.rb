@@ -1,6 +1,7 @@
 class PerformersController < ApplicationController
-  before_action :set_performer, only: [:show, :edit, :update, :destroy]
-  before_filter :authorized_to_edit?, only: [:edit, :update, :destroy]
+  before_action :set_performer, only: [:show, :edit, :update]
+  before_filter :authorized_to_edit?, only: [:edit, :update]
+  before_filter :prompt_login
 
   def index
     scope = Performer.all
@@ -86,5 +87,12 @@ class PerformersController < ApplicationController
 
   def performer_params
     params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre, :user_id, :avatar, :location)
+  end
+
+  def prompt_login
+    unless user_signed_in?
+      flash[:notice] = "Please sign in to start listing your music"
+      redirect_to new_user_session_path
+    end
   end
 end
