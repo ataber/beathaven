@@ -1,7 +1,7 @@
 class PerformersController < ApplicationController
   before_action :set_performer, only: [:show, :edit, :update]
   before_filter :authorized_to_edit?, only: [:edit, :update]
-  before_filter :prompt_login
+  before_filter :prompt_login, only: [:edit, :update, :create]
 
   def index
     scope = Performer.all
