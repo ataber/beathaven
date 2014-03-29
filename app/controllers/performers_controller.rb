@@ -1,7 +1,7 @@
 class PerformersController < ApplicationController
   before_action :set_performer, only: [:show, :edit, :update]
   before_filter :authorized_to_edit?, only: [:edit, :update]
-  before_filter :prompt_login, only: [:new, :edit, :update, :create]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     scope = Performer.all
@@ -65,7 +65,7 @@ class PerformersController < ApplicationController
     performer.recipient_id = recipient.id
   end
 
-  def authorized_to_edit?
+  def   authorized_to_edit?
     if current_user != @performer.user
       flash[:error] = "You are not authorized to edit that listing"
       redirect_to :back
@@ -87,12 +87,5 @@ class PerformersController < ApplicationController
 
   def performer_params
     params[:performer].permit(:price, :description, :name, :soundcloud_url, :genre, :user_id, :avatar, :location)
-  end
-
-  def prompt_login
-    unless user_signed_in?
-      flash[:notice] = "Please sign in to start listing your music"
-      redirect_to new_user_session_path
-    end
   end
 end

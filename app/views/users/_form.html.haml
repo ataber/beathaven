@@ -1,7 +1,7 @@
 = form_for @user, html: { class: "form-horizontal", role: "form" } do |f|
   - if @user.errors.any?
     .text-danger
-      %h4= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"
+      %h4= "#{pluralize(@performer.errors.count, "error")} prohibited this user from being saved:"
       %ul.list-group
         - @user.errors.full_messages.each do |msg|
           %li.list-group-item= msg
