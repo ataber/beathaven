@@ -14,5 +14,4 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
-//= require performers/form
 //= require_tree .

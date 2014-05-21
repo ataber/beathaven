@@ -1,10 +1,10 @@
 class PerformersController < ApplicationController
-  before_action :set_performer, only: [:show, :edit, :update]
+  before_action :set_performer, except: [:index, :new, :create]
   before_filter :authorized_to_edit?, only: [:edit, :update]
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    scope = Performer.all
+    scope = Performer.active
     scope = scope.genre_like(genre) if genre
     scope = scope.search(search_text) if search_text
     @performers = scope.paginate(:page => params[:page], :per_page => 20)
@@ -27,7 +27,6 @@ class PerformersController < ApplicationController
 
   def create
     @performer = Performer.new(performer_params)
-    create_stripe_record(@performer)
 
     respond_to do |format|
       if @performer.save
@@ -41,8 +40,6 @@ class PerformersController < ApplicationController
   end
 
   def update
-    create_stripe_record(@performer) unless @performer.recipient_id.present?
-
     respond_to do |format|
       if @performer.update(performer_params)
         format.html { redirect_to @performer, notice: 'Listing was successfully updated.' }
@@ -54,6 +51,13 @@ class PerformersController < ApplicationController
     end
   end
 
+  def billing
+  end
+
+  def update_billing
+    create_stripe_record(@performer)
+  end
+
   private
   def create_stripe_record(performer)
     recipient = Stripe::Recipient.create(
@@ -63,9 +67,10 @@ class PerformersController < ApplicationController
       bank_account: params.require(:stripeToken)
       )
     performer.recipient_id = recipient.id
+    performer.save
   end
 
-  def   authorized_to_edit?
+  def authorized_to_edit?
     if current_user != @performer.user
       flash[:error] = "You are not authorized to edit that listing"
       redirect_to :back

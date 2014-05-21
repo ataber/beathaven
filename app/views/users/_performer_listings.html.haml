@@ -1,14 +1,22 @@
-%table.table.table-bordered
+%table.table
   %tr
-    %th Name
-    %th View Bookings
-    %th Edit
+    %th{colspan: "2"} Name
+    %th Billing Information Present?
   - if @performers.exists?
     - @performers.each do |p|
+      %tr{class: p.billing_exists? ? "success" : "danger"}
+        %td{colspan: "2"}= p.name
+        %td
+          - if p.billing_exists?
+            %i.glyphicon.glyphicon-usd
+          - else
+            %i.glyphicon.glyphicon-remove
       %tr
-        %td= p.name
         %td= link_to "Bookings", performer_bookings_path(p), class: "btn btn-primary"
         %td= link_to "Edit Listing", edit_performer_path(p), class: "btn btn-primary"
+        %td= link_to "Edit Billing Info", billing_performer_path(p), class: "btn btn-primary"
+      %tr
+        %td{colspan: "3", style: "border-top: none; height: 50px;"}
   - else
     %tr
       %td{colspan: "3"}

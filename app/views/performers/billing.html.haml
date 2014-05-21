@@ -1,0 +1,26 @@
+%h2 Billing Information
+#billing
+  = form_for update_billing_performer_path(@performer), html: { class: "form-horizontal", role: "form", id: "billing-form" } do |f|
+    .form-errors.text-danger.text-center
+    .payment-errors.text-danger
+    %p.help-block These fields will allow us to transfer money to your bank account
+    .form-group
+      = label_tag :legal_billing_name, "Legal Billing Name", class: "col-sm-2 control-label"
+      .col-sm-4
+        = text_field_tag :legal_billing_name, "", class: "form-control legal-billing-name", type: "text"
+      %p.help-block
+        Enter the name on the bank account
+    .form-group
+      = label_tag :billing_email, "Billing Email", class: "col-sm-2 control-label"
+      .col-sm-4
+        = text_field_tag :billing_email, nil, class: "form-control billing-email", type: "text"
+    .form-group
+      = label_tag :routing_number, "Routing Number", class: "col-sm-2 control-label"
+      .col-sm-4
+        = text_field_tag :routing_number, nil, class: "form-control routing-number", type: "text"
+    .form-group
+      = label_tag :account_number, "Account Number", class: "col-sm-2 control-label"
+      .col-sm-4
+        = text_field_tag :account_number, nil, class: "form-control account-number", type: "text"
+    .col-sm-offset-5
+      = f.submit 'Save', disabled: true, class: "btn btn-primary", id: "billing-submit"

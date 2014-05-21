@@ -1,16 +1,9 @@
-$(document).on "click", "#show-billing-form", (event) ->
-  event.preventDefault()
-  $("#performer-submit").data("stripesubmit", false)
-  $(".billing").find("input").each ->
-    $(@).prop("disabled", false)
-
-$("#performer-form").ready ->
-
-  Stripe.setPublishableKey("<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>")
+$("#billing").ready ->
+  Stripe.setPublishableKey("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>")
 
   validateForm = ->
-    $("#performer-submit").prop("disabled", false)
-    $("#performer-form").validate({
+    $("#billing-submit").prop("disabled", false)
+    $("#billing-form").validate({
       errorClass: "text-danger",
       rules: {
         legal_billing_name: "required",

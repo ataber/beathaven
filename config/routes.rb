@@ -2,6 +2,10 @@ Beathaven::Application.routes.draw do
   devise_for :users
 
   resources :performers, except: :destroy do
+    member do
+      get :billing
+      post :update_billing
+    end
     resources :bookings, only: [:index, :create] do
       member do
         get :accept

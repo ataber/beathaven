@@ -1,13 +1,10 @@
 = form_for @performer, html: { class: "form-horizontal", role: "form", id: "performer-form" } do |f|
-  // TODO FIXME: three different error divs here ugh
   - if @performer.errors.any?
     .text-danger
       %h4= "#{pluralize(@performer.errors.count, "error")} prohibited this performer from being saved:"
       %ul.list-group
         - @performer.errors.full_messages.each do |msg|
           %li.list-group-item= msg
-  .payment-errors.text-danger
-  .form-errors.text-danger.text-center
 
   .form-group
     = f.label(:name, "Performer Name", class: "col-sm-2 control-label")
@@ -23,17 +20,9 @@
     .col-sm-4
       = f.text_area(:description, class: "form-control", type: "text")
   .form-group
-    = f.label(:genre, "Genre", class: "col-sm-2 control-label")
-    .col-sm-4#genre-select
-      = f.select(:genre, options_for_genre(@performer.genre), {}, {class: "form-control", type: "select"})
-  .form-group
     = f.label(:price, "Price Per Gig ($)", class: "col-sm-2 control-label")
     .col-sm-4
       = f.number_field(:price, class: "form-control", type: "number")
-  .form-group
-    = f.label(:location, "Location", class: "col-sm-2 control-label")
-    .col-sm-4
-      = f.text_field(:location, class: "form-control", type: "text")
   .form-group
     = f.label(:avatar, "Cover Image", class: "col-sm-2 control-label")
     .col-sm-4
@@ -41,14 +30,5 @@
       %p.help-block We will display this image when users search for you
   = f.hidden_field(:user_id, value: current_user.id)
 
-  %hr
-  %h2 Billing Information
-  - recipient = @performer.recipient_id.present?
-  - if recipient
-    %p We already have billing information for this performer
-    = link_to "#", id: "show-billing-form" do
-      %button.btn.btn-primary Update Billing
-  = render partial: "billing_form", locals: {recipient: recipient}
-
   .col-sm-offset-5
-    = f.submit 'Save', disabled: true, class: "btn btn-primary", id: "performer-submit", data: {stripesubmit: !recipient}
+    = f.submit 'Save', class: "btn btn-primary", id: "performer-submit"
