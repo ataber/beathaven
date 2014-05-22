@@ -1,23 +1,21 @@
+%h4 We won't show your listing until you enter billing information.
 %table.table
   %tr
-    %th{colspan: "2"} Name
+    %th Name
     %th Billing Information Present?
   - if @performers.exists?
     - @performers.each do |p|
       %tr{class: p.billing_exists? ? "success" : "danger"}
-        %td{colspan: "2"}= p.name
+        %td= link_to p.name, performer_bookings_path(p)
         %td
-          - if p.billing_exists?
-            %i.glyphicon.glyphicon-usd
-          - else
-            %i.glyphicon.glyphicon-remove
-      %tr
-        %td= link_to "Bookings", performer_bookings_path(p), class: "btn btn-primary"
-        %td= link_to "Edit Listing", edit_performer_path(p), class: "btn btn-primary"
-        %td= link_to "Edit Billing Info", billing_performer_path(p), class: "btn btn-primary"
-      %tr
-        %td{colspan: "3", style: "border-top: none; height: 50px;"}
+          = link_to billing_performer_path(p) do
+            - if p.billing_exists?
+              %i.glyphicon.glyphicon-usd
+              Update Information
+            - else
+              %i.glyphicon.glyphicon-remove
+              No information
   - else
     %tr
-      %td{colspan: "3"}
+      %td{colspan: "2"}
         %h3.text-center.text-muted Nothing Here Yet
