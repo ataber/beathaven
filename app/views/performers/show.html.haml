@@ -12,7 +12,7 @@
       = @embed_info.html.html_safe
     - else
       - @performer.avatar.options[:url] = ":s3_domain_url"
-      = image_tag @performer.avatar.url(:medium), class: "image-responsive"
+      = image_tag @performer.avatar.url(:large), class: "image-responsive"
   .col-sm-6
     - if @performer.description.present?
       .well
