@@ -4,7 +4,7 @@ Beathaven::Application.routes.draw do
   resources :performers, except: :destroy do
     member do
       get :billing
-      post :update_billing
+      post :billing, to: "performers#update_billing"
     end
     resources :bookings, only: [:index, :create] do
       member do

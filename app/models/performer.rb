@@ -34,11 +34,17 @@ class Performer < ActiveRecord::Base
   has_attached_file :avatar, styles: {
     thumb: '100x100>',
     square: '200x200#',
-    medium: '300x300>'
+    medium: '300x300>',
+    large:  '500x500>'
   }
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def billing_exists?
     recipient_id.present?
+  end
+
+  def expires_on
+    # TODO: figure out a better way to have a date select in billing page
+    2.months.from_now
   end
 end

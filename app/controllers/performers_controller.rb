@@ -55,27 +55,38 @@ class PerformersController < ApplicationController
   end
 
   def update_billing
-    create_stripe_record(@performer)
+    begin
+      recipient = Stripe::Recipient.create(
+        name: billing_params[:legal_billing_name],
+        type: "individual",
+        card: {
+          number:    billing_params[:card_number],
+          cvc:       billing_params[:cvc],
+          exp_month: billing_params["expires_on(2i)"],
+          exp_year:  billing_params["expires_on(1i)"],
+        }
+        )
+      @performer.recipient_id = recipient.id
+      @performer.save
+    rescue Stripe::InvalidRequestError, Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to billing_performer_path(@performer)
+      return
+    end
+    redirect_to performer_path(@performer)
   end
 
   private
-  def create_stripe_record(performer)
-    recipient = Stripe::Recipient.create(
-      name: params.require(:legal_billing_name),
-      type: "individual",
-      email: params.require(:billing_email),
-      bank_account: params.require(:stripeToken)
-      )
-    performer.recipient_id = recipient.id
-    performer.save
-  end
-
   def authorized_to_edit?
     if current_user != @performer.user
       flash[:error] = "You are not authorized to edit that listing"
       redirect_to :back
       return
     end
+  end
+
+  def billing_params
+    params.require(:performer).permit(:legal_billing_name, :card_number, :cvc, :expires_on)
   end
 
   def set_performer
