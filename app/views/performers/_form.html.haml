@@ -6,25 +6,27 @@
         - @performer.errors.full_messages.each do |msg|
           %li.list-group-item= msg
 
+  .panel.panel-default
+    .panel-body * : Required field
   .form-group
-    = f.label(:name, "Performer Name", class: "col-sm-2 control-label")
+    = f.label(:name, "* Performer Name", class: "col-sm-2 control-label")
     .col-sm-4
       = f.text_field(:name, class: "form-control", type: "text")
   .form-group
     = f.label(:soundcloud_url, "Soundcloud URL", class: "col-sm-2 control-label")
     .col-sm-4
       = f.text_field(:soundcloud_url, class: "form-control", type: "text")
-    %p.help-block Pick a song or set on Soundcloud that shows off your music, and we'll embed it automatically in your listing
+    %p.help-block Pick a song or set on Soundcloud that shows off your music
   .form-group
     = f.label(:description, "Description", class: "col-sm-2 control-label")
     .col-sm-4
       = f.text_area(:description, class: "form-control", type: "text")
   .form-group
-    = f.label(:price, "Price Per Gig ($)", class: "col-sm-2 control-label")
+    = f.label(:price, "* Price Per Gig ($)", class: "col-sm-2 control-label")
     .col-sm-4
       = f.number_field(:price, class: "form-control", type: "number")
   .form-group
-    = f.label(:avatar, "Cover Image", class: "col-sm-2 control-label")
+    = f.label(:avatar, "* Cover Image", class: "col-sm-2 control-label")
     .col-sm-4
       = f.file_field :avatar, class: "form-control file-upload", type: "file"
       %p.help-block We will display this image when users search for you

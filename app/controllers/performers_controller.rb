@@ -73,7 +73,8 @@ class PerformersController < ApplicationController
       redirect_to billing_performer_path(@performer)
       return
     end
-    redirect_to performer_path(@performer)
+    flash[:notice] = "Billing successfully updated"
+    redirect_to edit_performer_path(@performer)
   end
 
   private
