@@ -4,7 +4,7 @@ class PerformersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    scope = Performer.active
+    scope = Performer.all
     scope = scope.genre_like(genre) if genre
     scope = scope.search(search_text) if search_text
     @performers = scope.paginate(:page => params[:page], :per_page => 20)

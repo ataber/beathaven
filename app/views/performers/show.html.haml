@@ -29,8 +29,15 @@
             Please log in to book
           = link_to new_user_session_path do
             %button.btn.btn-primary Log In
+    - elsif @performer.billing_exists?
+      = render partial: "checkout", :locals => { :performer => @performer, :booking => @booking }
     - else
-      %span= render partial: "checkout", :locals => { :performer => @performer, :booking => @booking }
+      %br
+        %div{ style: "text-align: center;"}
+          %h4
+            This performer isn't activated yet.
+          = link_to "mailto:sales@beathavenapp.com" do
+            %button.btn.btn-primary Contact Us To Help Activate This Performer
 
 - if @performer.reviews.present?
   %hr
