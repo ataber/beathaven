@@ -13,11 +13,12 @@
 </head>
 <body>
 
-<div class="container">
-<br/>
-<%= render :partial => "partials/navbar" %>
-<%= render :partial => "partials/flash" %>
-<%= yield %>
+<div id="wrap">
+  <div class="container">
+  <%= render :partial => "partials/navbar" %>
+  <%= render :partial => "partials/flash" %>
+  <%= yield %>
+  </div>
 </div>
 
 <%= render :partial => "partials/footer" %>

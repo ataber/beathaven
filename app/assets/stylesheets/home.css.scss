@@ -1,0 +1,25 @@
+html, body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -20px;
+  padding: 0 0 20px;
+}
+
+#footer {
+  height: 20px;
+}
+
+h3 {
+  text-align: center;
+  min-height: 60px;
+}
+
+.cta-button {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}

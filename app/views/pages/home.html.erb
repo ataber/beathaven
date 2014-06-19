@@ -9,19 +9,23 @@
     </div>
   </div>
 
-  <div class="container">
-    <p class="lead">How Does It Work?</p>
-    <p>You search our listings for the perfect performer for any event - <strong>party, wedding, or seminar</strong> - and once you've found who you want, we take care of the billing and logistics.</p>
-    <p class="lead">Why Not Book Through Craigslist?</p>
-    <p>Our rating and review system rewards performers who are <strong>professional and competitively priced</strong> so you can be sure your performer will show up on time and match your expectations.</p>
-    <p class="lead">What If I Can't Find What I'm Looking For?</p>
-    <p>We charge on a per-transaction basis, and there's no charge to browse. If there's a DJ you don't see that should be on this site, we'd love to make it happen.
-    </p>
-    <br/>
-    <div class="col-md-offset-4 col-md-3">
-      <%= link_to new_user_path do %>
-        <button class="btn btn-lg btn-primary">Sign Up Now!</button>
-      <%- end %>
+  <div class="row">
+    <div class="col-md-4">
+      <h3>How Does It Work?</h3>
+      <p class="lead">You search our listings for the perfect performer for any event - <strong>party, wedding, or seminar</strong> - and once you've found who you want, we take care of the billing and logistics.</p>
+    </div>
+    <div class="col-md-4">
+      <h3>Why Not Book Through Craigslist?</h3>
+      <p class="lead">Our rating and review system rewards performers who are <strong>professional and competitively priced</strong> so you can be sure your performer will show up on time and match your expectations.</p>
+    </div>
+    <div class="col-md-4">
+      <h3>What If I Can't Find What I Want?</h3>
+      <p class="lead">We charge on a per-transaction basis, and there's no charge to browse. If there's a DJ you don't see that should be on this site, we'd love to make it happen.</p>
     </div>
   </div>
+  <p class="cta-button">
+    <%= link_to new_user_path do %>
+      <button class="btn btn-lg btn-primary">Sign Up Now!</button>
+    <%- end %>
+  </p>
 </div>
