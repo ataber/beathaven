@@ -1,31 +1,136 @@
-<div class="home">
-  <div class="jumbotron">
-    <div class="container">
-      <h2>Ever Wanted To Hear Your Favorite DJ Play...In Your Backyard?</h2>
-      <p>Book your favorite local DJs to play at your events</p>
-      <%= link_to performers_path do %>
-        <button class="btn btn-primary">Start Browsing</button>
-      <% end %>
+<!-- Header -->
+<div class="intro-header">
+  <div class="container full">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="intro-message">
+          <h1>Your Audience Is Waiting</h1>
+          <h3>We Connect Small Businesses and Local Bands</h3>
+          <hr class="intro-divider">
+          <ul class="list-inline intro-social-buttons">
+            <li>
+              <a href="#first" class="btn btn-default btn-lg"><span class="network-name">Learn How</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
+  <!-- /.container -->
 
-  <div class="row">
-    <div class="col-md-4">
-      <h3>How Does It Work?</h3>
-      <p class="lead">You search our listings for the perfect performer for any event - <strong>party, wedding, or seminar</strong> - and once you've found who you want, we take care of the billing and logistics.</p>
+</div>
+<!-- /.intro-header -->
+
+<!-- Page Content -->
+
+<a name="first"></a>
+<div class="content-section-a">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5 col-sm-6">
+        <hr class="section-heading-spacer">
+        <div class="clearfix"></div>
+        <h2 class="section-heading">How Does It Work?
+        <p class="lead">You search our listings for the perfect performer that will deliver foot-traffic to your small business, then we connect you and handle the billing and logistics.</p>
+      </div>
+      <div class="col-lg-5 col-lg-offset-1 col-sm-6">
+        <%= image_tag "sgt_pepper.jpg", class: "img-responsive" %>
+      </div>
     </div>
-    <div class="col-md-4">
-      <h3>Why Not Book Through Craigslist?</h3>
-      <p class="lead">Our rating and review system rewards performers who are <strong>professional and competitively priced</strong> so you can be sure your performer will show up on time and match your expectations.</p>
+
+  </div>
+  <!-- /.container -->
+
+</div>
+<!-- /.content-section-a -->
+
+<div class="content-section-b">
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+        <hr class="section-heading-spacer">
+        <div class="clearfix"></div>
+        <h2 class="section-heading">For Businesses:
+        <p class="lead">Our review system ensures performers will be as advertised and help bring the foot-traffic you need to grow a local following.</p>
+      </div>
+      <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+        <%= image_tag "mic.jpg", class: "img-responsive" %>
+      </div>
     </div>
-    <div class="col-md-4">
-      <h3>What If I Can't Find What I Want?</h3>
-      <p class="lead">We charge on a per-transaction basis, and there's no charge to browse. If there's a DJ you don't see that should be on this site, we'd love to make it happen.</p>
+
+  </div>
+  <!-- /.container -->
+
+</div>
+<!-- /.content-section-b -->
+
+<div class="content-section-a">
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-5 col-sm-6">
+        <hr class="section-heading-spacer">
+        <div class="clearfix"></div>
+        <h2 class="section-heading">For Bands:
+        <p class="lead">We handle the billing so you are sure to get paid for a gig well done. As your audience grows, so will your rates on Beathaven. Businesses want to hire you, what are you waiting for?</p>
+      </div>
+      <div class="col-lg-5 col-lg-offset-1 col-sm-6">
+        <%= image_tag "banjo.jpg", class: "img-responsive" %>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+</div>
+<!-- /.content-section-a -->
+
+<div class="banner">
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-1">
+        <h3>Grow Your Business Locally</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3">
+        <ul class="list-inline banner-social-buttons">
+          <li>
+            <%= link_to new_user_path do %>
+              <button class="btn btn-lg btn-default">Sign Up Now!</button>
+            <%- end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+</div>
+<!-- /.banner -->
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <ul class="list-inline">
+          <li>
+            <%= link_to "Home", root_path %>
+          </li>
+         <li class="footer-menu-divider">&sdot;</li>
+          <li>
+            <a href="mailto:support@beathaven.com">Contact</a>
+          </li>
+        </ul>
+        <p class="copyright text-muted small">Copyright &copy; BeatHaven 2014. All Rights Reserved</p>
+      </div>
     </div>
   </div>
-  <p class="cta-button">
-    <%= link_to new_user_path do %>
-      <button class="btn btn-lg btn-primary">Sign Up Now!</button>
-    <%- end %>
-  </p>
-</div>
+</footer>
