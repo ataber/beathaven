@@ -4,6 +4,7 @@
   %tr
     %th Name
     %th Billing Information Present?
+    %th Show Listing
   - if @performers.exists?
     - @performers.each do |p|
       %tr{class: p.billing_exists? ? "success" : "danger"}
@@ -16,6 +17,9 @@
             - else
               %i.glyphicon.glyphicon-remove
               No information
+        %td
+          = form_for p, url: activate_performer_path(p), remote: true do |f|
+            = f.check_box :active, class: "activate-checkbox"
   - else
     %tr
       %td{colspan: "2"}

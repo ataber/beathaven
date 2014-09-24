@@ -3,3 +3,8 @@ $("#user-edit-tab").ready ->
     event.preventDefault()
     href = $(@).attr("href")
     $('#user-edit-tab a[href="#{href}"]').tab("show")
+
+$("#listings").ready ->
+  $(@).on "click", ".activate-checkbox", (event) ->
+    $(@).parents("form").first().submit()
+

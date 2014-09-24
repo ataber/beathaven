@@ -77,6 +77,12 @@ class PerformersController < ApplicationController
     redirect_to edit_performer_path(@performer)
   end
 
+  def activate
+    active = params.require(:performer).permit(:active)
+    @performer.active = active
+    @performer.save
+  end
+
   private
   def authorized_to_edit?
     if current_user != @performer.user
