@@ -65,7 +65,7 @@ class PerformersController < ApplicationController
           exp_month: billing_params["expires_on(2i)"],
           exp_year:  billing_params["expires_on(1i)"],
         }
-        )
+      )
       @performer.recipient_id = recipient.id
       @performer.save
     rescue Stripe::InvalidRequestError, Stripe::CardError => e

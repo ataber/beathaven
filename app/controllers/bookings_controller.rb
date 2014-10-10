@@ -12,11 +12,11 @@ class BookingsController < ApplicationController
   end
 
   def create
-    # save the stripe details for later, when the performer accepts the booking
-    get_stripe_customer
+    # save the stripe details for later (when the performer accepts the booking)
+    create_stripe_customer unless current_user.stripe_customer_id
 
-    @booking = Booking.new(params.require(:booking).permit(:event_date, :cost))
-    @booking.performer = @performer
+    booking_params = params.require(:booking).permit(:event_date, :cost)
+    @booking = @performer.build_booking(booking_params)
     @booking.user = find_user
 
     if @booking.save
@@ -24,38 +24,20 @@ class BookingsController < ApplicationController
     else
       flash[:error] = @booking.errors.messages
     end
+
     redirect_to performer_path(@performer)
   end
 
   def accept
-    booking = Booking.where(id: params.require(:id)).preload(:user, :performer).first
-    user = booking.user
+    booking = Booking.find(params.require(:id))
+    chargee = booking.user
 
-    if (customer_id = user.stripe_customer_id)
-      Booking.transaction do
-        raise "No recipient ID for #{booking.performer.name}" unless booking.performer.recipient_id
-        begin
-          Stripe::Charge.create(
-            amount: charge_amount(booking.cost),
-            currency: "usd",
-            customer: customer_id,
-            application_fee: charge_fee(booking.cost),
-            description: "Booking for #{booking.performer.name} on #{booking.event_date}"
-            )
-          transfer = Stripe::Transfer.create(
-            amount: transfer_amount(booking.cost),
-            currency: "usd",
-            recipient: booking.performer.recipient_id,
-            description: "Booking for #{booking.performer.name} on #{booking.event_date}",
-            statement_descriptor: "Booking for #{booking.performer.name} on #{booking.event_date}"
-            )
-          booking.transfer_id = transfer.id
-          booking.accepted = true
-          booking.save!
-        rescue Stripe::CardError => e
-          flash[:error] = e.message
-        end
-      end
+    if (customer_id = chargee.stripe_customer_id)
+      create_stripe_charge(booking, customer_id)
+      transfer_id = transfer_to_performer(booking)
+      booking.transfer_id = transfer_id
+      booking.accepted = true
+      booking.save!
     else
       flash[:error] = "The user that requested this booking doesn't have any payment info associated, please contact support@beathavenapp.com"
     end
@@ -64,21 +46,45 @@ class BookingsController < ApplicationController
 
   def decline
     booking = Booking.find(params.require(:id))
-    booking.update_attribute(:active, false)
+    booking.active = false
+    booking.save!
+
     render nothing: true, status: 200
   end
 
   private
   def get_stripe_customer
-    if (stripe_id = current_user.stripe_customer_id)
-      Stripe::Customer.retrieve(id: stripe_id)
-    else
-      customer = Stripe::Customer.create(
-        card:        params.require(:stripeToken),
-        description: params.require(:stripeEmail)
-        )
-      current_user.update_attribute(:stripe_customer_id, customer.id)
-    end
+    Stripe::Customer.retrieve(id: current_user.stripe_customer_id)
+  end
+
+  def create_stripe_customer
+    customer = Stripe::Customer.create(
+      card:        params.require(:stripeToken),
+      description: params.require(:stripeEmail)
+    )
+    current_user.stripe_customer_id = customer.id
+    current_user.save!
+  end
+
+  def create_stripe_charge(booking, chargee_id)
+    Stripe::Charge.create(
+      amount: charge_amount(booking.cost),
+      currency: "usd",
+      customer: chargee_id,
+      application_fee: charge_fee(booking.cost),
+      description: "Booking for #{booking.performer.name} on #{booking.event_date}"
+    )
+  end
+
+  def transfer_to_performer(booking)
+    transfer = Stripe::Transfer.create(
+      amount: transfer_amount(booking.cost),
+      currency: "usd",
+      recipient: booking.performer.recipient_id,
+      description: "Booking for #{booking.performer.name} on #{booking.event_date}",
+      statement_descriptor: "Booking for #{booking.performer.name} on #{booking.event_date}"
+    )
+    transfer.id
   end
 
   def charge_amount(cost)
@@ -105,6 +111,6 @@ class BookingsController < ApplicationController
   end
 
   def find_user
-    @user ||= User.find(params.require(:booking).permit(:user_id)[:user_id])
+    User.find(params.require(:booking).permit(:user_id)[:user_id])
   end
 end
