@@ -17,6 +17,7 @@
 #  avatar_file_size    :integer
 #  avatar_updated_at   :datetime
 #  location            :string(255)
+#  active              :boolean          default(TRUE)
 #
 
 class Performer < ActiveRecord::Base
@@ -27,7 +28,7 @@ class Performer < ActiveRecord::Base
   has_many :unscoped_bookings, class_name: "Booking"
   has_many :reviews, inverse_of: :performer
 
-  scope :active, where("recipient_id IS NOT NULL")
+  scope :with_recipient, where("recipient_id IS NOT NULL")
   scope :genre_like, lambda { |genre| where("genre ILIKE ?", "%" + genre + "%") }
   scope :search, lambda { |text| where("name ILIKE ? OR genre ILIKE ? OR location ILIKE ?", "%" + text + "%", "%" + text + "%", "%" + text + "%")}
 

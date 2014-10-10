@@ -15,7 +15,8 @@ class PerformersController < ApplicationController
       client      = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_ID'])
       @embed_info = client.get('/oembed', :url => url, :maxwidth => "500", :maxheight => "500")
     end
-    @booking = @performer.bookings.new
+
+    @booking = @performer.bookings.build
   end
 
   def new
@@ -73,14 +74,9 @@ class PerformersController < ApplicationController
       redirect_to billing_performer_path(@performer)
       return
     end
+
     flash[:notice] = "Billing successfully updated"
     redirect_to edit_performer_path(@performer)
-  end
-
-  def activate
-    active = params.require(:performer).permit(:active)
-    @performer.active = active
-    @performer.save
   end
 
   private
