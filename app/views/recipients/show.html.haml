@@ -1,6 +1,6 @@
 %h2 Billing Information
 #billing
-  = form_for @performer, url: billing_performer_path, method: "POST", html: { class: "form-horizontal", role: "form", id: "billing-form" } do |f|
+  = form_for performer_recipient_path, html: { class: "form-horizontal", role: "form", id: "billing-form" } do |f|
     %p.help-block These fields will allow us to transfer money to your debit card
     .form-group
       = f.label :legal_billing_name, "Legal Billing Name", class: "col-sm-2 control-label"

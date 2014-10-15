@@ -24,6 +24,7 @@ class Performer < ActiveRecord::Base
   validates_presence_of :name, :price, :user_id
 
   belongs_to :user, inverse_of: :performers
+  belongs_to :recipient
   has_many :bookings, -> { where active: true }, inverse_of: :performer
   has_many :unscoped_bookings, class_name: "Booking"
   has_many :reviews, inverse_of: :performer

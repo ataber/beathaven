@@ -52,33 +52,6 @@ class PerformersController < ApplicationController
     end
   end
 
-  def billing
-  end
-
-  def update_billing
-    begin
-      recipient = Stripe::Recipient.create(
-        name: billing_params[:legal_billing_name],
-        type: "individual",
-        card: {
-          number:    billing_params[:card_number],
-          cvc:       billing_params[:cvc],
-          exp_month: billing_params["expires_on(2i)"],
-          exp_year:  billing_params["expires_on(1i)"],
-        }
-      )
-      @performer.recipient_id = recipient.id
-      @performer.save
-    rescue Stripe::InvalidRequestError, Stripe::CardError => e
-      flash[:error] = e.message
-      redirect_to billing_performer_path(@performer)
-      return
-    end
-
-    flash[:notice] = "Billing successfully updated"
-    redirect_to edit_performer_path(@performer)
-  end
-
   private
   def authorized_to_edit?
     if current_user != @performer.user
