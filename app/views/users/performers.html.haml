@@ -1,3 +1,4 @@
+= render partial: "edit"
 %h4 Enter billing information so we can list you as ready to go
 %h5 We won't charge your card, this is to transfer you money for a job well done
 %table.table
@@ -9,7 +10,7 @@
       %tr{class: p.billing_exists? ? "success" : "danger"}
         %td= link_to p.name, performer_bookings_path(p)
         %td
-          = link_to billing_performer_path(p) do
+          = link_to performer_recipient_path(p) do
             - if p.billing_exists?
               %i.glyphicon.glyphicon-usd
               Update Information

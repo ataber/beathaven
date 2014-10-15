@@ -1,0 +1,15 @@
+%ul.nav.nav-pills.nav-justified
+  %li{class: params[:action] == "edit" ? "active" : nil }
+    = link_to edit_user_path(current_user) do
+      Account Details
+  %li{class: params[:action] == "upcoming_events" ? "active" : nil }
+    = link_to user_upcoming_events_path(current_user) do
+      Upcoming Events
+  %li{class: params[:action] == "past_events" ? "active" : nil }
+    = link_to user_past_events_path(current_user) do
+      Past Events
+  %li{class: params[:action] == "performers" ? "active" : nil }
+    = link_to user_performers_path(current_user) do
+      Your Performer Listings
+%br
+= yield

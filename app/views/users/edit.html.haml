@@ -1,20 +1,18 @@
-%ul.nav.nav-pills.nav-justified#user-edit-tab
-  %li.active
-    = link_to "#account", data: {toggle: "tab"} do
-      Account Details
-  %li
-    = link_to "#upcoming", data: {toggle: "tab"} do
-      Upcoming Events
-  %li
-    = link_to "#past", data: {toggle: "tab"} do
-      Past Events
-  %li
-    = link_to "#listings", data: {toggle: "tab"} do
-      Your Performer Listings
+= render partial: "edit"
+= link_to "Change your password", edit_user_registration_path
 
-%br
-.tab-content
-  .tab-pane.fade.in.active#account= render partial: "account_details"
-  .tab-pane.fade#upcoming= render partial: "upcoming_events"
-  .tab-pane.fade#past= render partial: "past_events"
-  .tab-pane.fade#listings= render partial: "performer_listings"
+%h3 Payment History
+%table.table.table-bordered
+  %tr
+    %th Amount
+    %th Card Number
+    %th Date Billed
+  - if (history = current_user.payment_history)
+    - history.each do |payment|
+      %tr
+        %td= number_to_currency(payment.amount/100)
+        %td= "************" + payment.card.last4
+        %td= Time.at(payment.created).strftime("%d/%m/%Y")
+  - else
+    %tr
+      %td.text-center.text-muted{colspan: "3"} Nothing Yet

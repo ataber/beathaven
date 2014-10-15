@@ -14,7 +14,13 @@ Beathaven::Application.routes.draw do
       end
     end
   end
-  resources :users
+
+  resources :users do
+    get :upcoming_events
+    get :past_events
+    get :performers
+  end
+
   resources :comments
   resources :reviews
 
