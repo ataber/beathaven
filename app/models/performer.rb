@@ -29,9 +29,7 @@ class Performer < ActiveRecord::Base
   has_many :unscoped_bookings, class_name: "Booking"
   has_many :reviews, inverse_of: :performer
 
-  scope :with_recipient, where("recipient_id IS NOT NULL")
-  scope :genre_like, lambda { |genre| where("genre ILIKE ?", "%" + genre + "%") }
-  scope :search, lambda { |text| where("name ILIKE ? OR genre ILIKE ? OR location ILIKE ?", "%" + text + "%", "%" + text + "%", "%" + text + "%")}
+  scope :with_recipient, -> { where("recipient_id IS NOT NULL") }
 
   has_attached_file :avatar, styles: {
     thumb: '100x100>',
@@ -40,6 +38,11 @@ class Performer < ActiveRecord::Base
     large:  '500x500>'
   }
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
+  def self.search(text)
+    exp = "%#{text}%"
+    where("name ILIKE ? OR genre ILIKE ? OR location ILIKE ?", exp, exp, exp)
+  end
 
   def billing_exists?
     recipient_id.present?

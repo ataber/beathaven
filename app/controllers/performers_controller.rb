@@ -4,15 +4,14 @@ class PerformersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    scope = Performer.all
-    scope = scope.genre_like(genre) if genre
+    scope = Performer.with_recipient
     scope = scope.search(search_text) if search_text
     @performers = scope.paginate(:page => params[:page], :per_page => 20)
   end
 
   def show
     if url = @performer.soundcloud_url.presence
-      client      = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_ID'])
+      client = Soundcloud.new(:client_id => ENV['SOUNDCLOUD_ID'])
       @embed_info = client.get('/oembed', :url => url, :maxwidth => "500", :maxheight => "500")
     end
 
@@ -67,10 +66,6 @@ class PerformersController < ApplicationController
 
   def set_performer
     @performer = Performer.find(params[:id])
-  end
-
-  def genre
-    params.permit(:genre)[:genre]
   end
 
   def search_text
