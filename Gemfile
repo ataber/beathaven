@@ -41,6 +41,7 @@ gem 'devise'
 gem 'soundcloud'
 gem 'annotate'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem 'aws-sdk'
 gem 'paperclip'
 gem 'rails_12factor', group: :production

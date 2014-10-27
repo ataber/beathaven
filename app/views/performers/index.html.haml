@@ -1,17 +1,12 @@
-%h1 Performers
-
 #performer-index
   - if @performers.present?
     - @performers.each do |performer|
-      .col-xs-6.col-md-3.performer-item
+      .col-lg-4.performer-item
         = link_to performer, class: "thumbnail" do
           .dark-overlay
-          .text-overlay
-            %h2= performer.name
-            %small= performer.description
-          - performer.avatar.options[:url] = ":s3_domain_url"
-          = image_tag performer.avatar.url(:medium), class: "image-responsive"
+          = image_tag performer.soundcloud_avatar_url, class: "image-responsive", alt: "No image found"
+        %h3.performer-name= performer.name
   - else
     %h3.text-center.text-muted No Results
 
-  = will_paginate @performers
+  = will_paginate @performers, renderer: BootstrapPagination::Rails

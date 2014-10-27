@@ -4,9 +4,9 @@ class PerformersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    scope = Performer.with_recipient
+    scope = Performer.all
     scope = scope.search(search_text) if search_text
-    @performers = scope.paginate(:page => params[:page], :per_page => 20)
+    @performers = scope.paginate(:page => params[:page], :per_page => 6)
   end
 
   def show

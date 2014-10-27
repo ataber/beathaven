@@ -21,7 +21,7 @@
 #
 
 class Performer < ActiveRecord::Base
-  validates_presence_of :name, :price, :user_id
+  validates_presence_of :name, :soundcloud_url
 
   belongs_to :user, inverse_of: :performers
   belongs_to :recipient
@@ -30,6 +30,7 @@ class Performer < ActiveRecord::Base
   has_many :reviews, inverse_of: :performer
 
   scope :with_recipient, -> { where("recipient_id IS NOT NULL") }
+  scope :with_user, -> { where("user_id IS NOT NULL") }
 
   has_attached_file :avatar, styles: {
     thumb: '100x100>',
@@ -44,8 +45,20 @@ class Performer < ActiveRecord::Base
     where("name ILIKE ? OR genre ILIKE ? OR location ILIKE ?", exp, exp, exp)
   end
 
+  def soundcloud_avatar_url
+    soundcloud_profile.avatar_url
+  end
+
+  def ready_to_book?
+    billing_exists? && price.present? && user.present?
+  end
+
   def billing_exists?
     recipient_id.present?
+  end
+
+  def soundcloud_profile
+    @profile ||= SoundcloudProfile.new(soundcloud_url)
   end
 
   def expires_on

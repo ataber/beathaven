@@ -22,21 +22,21 @@
       = "Want To Book " + @performer.name + "?"
     %p.help-block
       We won't charge your credit card until the performer has accepted your offer.
-    - if !user_signed_in?
+    - if @performer.ready_to_book?
+      = render partial: "checkout", :locals => { :performer => @performer, :booking => @booking }
+    - elsif !user_signed_in?
       %br
         %div{ style: "text-align: center;"}
           %h4
             Please log in to book
           = link_to new_user_session_path do
             %button.btn.btn-primary Log In
-    - elsif @performer.billing_exists?
-      = render partial: "checkout", :locals => { :performer => @performer, :booking => @booking }
     - else
       %br
         %div{ style: "text-align: center;"}
           %h4
             This performer isn't activated yet.
-          = link_to "mailto:sales@beathavenapp.com" do
+          = link_to "mailto:support@beathavenapp.com" do
             %button.btn.btn-primary Contact Us To Help Activate This Performer
 
 - if @performer.reviews.present?
