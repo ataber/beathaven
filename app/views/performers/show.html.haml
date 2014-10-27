@@ -6,6 +6,9 @@
       - if @performer.location
         \|
         = @performer.location
+      - if followers = @performer.followers_count
+        \|
+        = "#{number_with_delimiter(followers)} Followers"
 .row
   .col-sm-6
     - if @embed_info.present?

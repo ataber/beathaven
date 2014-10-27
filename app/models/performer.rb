@@ -57,6 +57,10 @@ class Performer < ActiveRecord::Base
     recipient_id.present?
   end
 
+  def followers_count
+    soundcloud_profile.followers_count
+  end
+
   def soundcloud_profile
     @profile ||= SoundcloudProfile.new(soundcloud_url)
   end

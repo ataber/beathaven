@@ -9,7 +9,7 @@ class SoundcloudProfile
     get_remote[:avatar_url].split("-")[0..-2].append("t500x500.jpg").join("-")
   end
 
-  def follower_count
+  def followers_count
     get_remote[:followers_count]
   end
 
