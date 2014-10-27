@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 
-ruby '2.0.0'
+ruby '2.1.2'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -31,6 +31,9 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry-rails'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'figaro'
 end
 
 gem 'haml-rails'
