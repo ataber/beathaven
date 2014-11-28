@@ -58,6 +58,8 @@ group :development, :test do
   gem 'factory_girl_rails'
 end
 
+gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
